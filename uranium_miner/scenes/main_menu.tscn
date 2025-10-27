@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://beoowvxsonv7i"]
+
+[ext_resource type="Script" uid="uid://crhbrjdxbl2ej" path="res://scripts/main_menu.gd" id="1_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://dnlfwcpou76gh" path="res://sprites/cave_icon.png" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://cxnpw42k1cmk4" path="res://sprites/player_background.png" id="2_8ln24"]
+[ext_resource type="Theme" uid="uid://co0t04pkj8m4q" path="res://themes/button_theme.tres" id="4_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://c4pl3yvxgl4f" path="res://sprites/quit_game_button.png" id="5_oa1go"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ekxnf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2_8ln24")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 50
+
+[node name="BoxContainer" type="BoxContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+vertical = true
+
+[node name="LobbyButton" type="Button" parent="TextureRect/MarginContainer/BoxContainer"]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Play
+"
+icon = ExtResource("1_l6cm7")
+expand_icon = true
+
+[node name="QuitButton" type="Button" parent="TextureRect/MarginContainer/BoxContainer"]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_rtw2f")
+theme_override_font_sizes/font_size = 32
+text = "Quit
+"
+icon = ExtResource("5_oa1go")
+expand_icon = true
+
+[connection signal="pressed" from="TextureRect/MarginContainer/BoxContainer/LobbyButton" to="." method="_on_lobby_button_pressed"]
+[connection signal="pressed" from="TextureRect/MarginContainer/BoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

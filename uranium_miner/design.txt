@@ -1,0 +1,8 @@
+main mechanic:
+	mining blockz
+
+game loop:
+	1.mining
+	2.selling items
+	3.upgrading
+	4.mining more

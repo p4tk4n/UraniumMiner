@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmg8m4gc6adp4"]
+
+[ext_resource type="Script" uid="uid://csgi6voxl3lae" path="res://scripts/player.gd" id="1_3vyb7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u8vuu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3vyb7"]
+width = 16
+height = 16
+noise = SubResource("FastNoiseLite_u8vuu")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
+size = Vector2(16, 16)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_3vyb7")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+texture = SubResource("NoiseTexture2D_3vyb7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g2els")

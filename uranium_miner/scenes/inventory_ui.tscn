@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmvpgvcx5h7mq"]
+
+[ext_resource type="Script" uid="uid://c3w66vn0t6bfw" path="res://scripts/inventory_ui.gd" id="1_tahbm"]
+[ext_resource type="Texture2D" uid="uid://b4akfd2js1ns1" path="res://sprites/inventory_slot.png" id="2_ylkvr"]
+[ext_resource type="PackedScene" uid="uid://ny8n0lj7yjx8" path="res://scenes/inventory_slot.tscn" id="3_mdwe3"]
+[ext_resource type="Texture2D" uid="uid://dp6yt8du42kcy" path="res://sprites/highlight_slot.png" id="4_iradw"]
+
+[node name="InventoryUI" type="Control"]
+light_mask = 0
+z_index = 5
+layout_mode = 3
+anchors_preset = 0
+offset_right = 160.0
+offset_bottom = 32.0
+script = ExtResource("1_tahbm")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(224, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("2_ylkvr")
+region_rect = Rect2(0, 0, 32, 16)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 7
+
+[node name="InventorySlot1" parent="NinePatchRect/GridContainer" instance=ExtResource("3_mdwe3")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="NinePatchRect/GridContainer" instance=ExtResource("3_mdwe3")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="NinePatchRect/GridContainer" instance=ExtResource("3_mdwe3")]
+layout_mode = 2
+
+[node name="InventorySlot4" parent="NinePatchRect/GridContainer" instance=ExtResource("3_mdwe3")]
+layout_mode = 2
+
+[node name="InventorySlot5" parent="NinePatchRect/GridContainer" instance=ExtResource("3_mdwe3")]
+layout_mode = 2
+
+[node name="InventorySlot6" parent="NinePatchRect/GridContainer" instance=ExtResource("3_mdwe3")]
+layout_mode = 2
+
+[node name="InventorySlot7" parent="NinePatchRect/GridContainer" instance=ExtResource("3_mdwe3")]
+layout_mode = 2
+
+[node name="Highlight" type="Sprite2D" parent="NinePatchRect/GridContainer"]
+position = Vector2(16, 16)
+texture = ExtResource("4_iradw")

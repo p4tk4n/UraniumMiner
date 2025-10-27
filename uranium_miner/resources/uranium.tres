@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://6i386f7wy5l1"]
+
+[ext_resource type="Script" uid="uid://bn8e3yg5wxksn" path="res://scripts/inventory_item.gd" id="1_bw8ra"]
+[ext_resource type="Texture2D" uid="uid://bd7807kya12we" path="res://sprites/uranium_resource.png" id="2_u6jra"]
+
+[resource]
+script = ExtResource("1_bw8ra")
+item_name = "uranium"
+texture = ExtResource("2_u6jra")
+quantity = 1
+metadata/_custom_type_script = "uid://bn8e3yg5wxksn"

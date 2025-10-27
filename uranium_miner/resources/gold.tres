@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://cx7qjo53pi3ir"]
+
+[ext_resource type="Script" uid="uid://bn8e3yg5wxksn" path="res://scripts/inventory_item.gd" id="1_b1u1o"]
+[ext_resource type="Texture2D" uid="uid://dtb3pil07fbxb" path="res://sprites/gold_resource.png" id="2_dytpx"]
+
+[resource]
+script = ExtResource("1_b1u1o")
+item_name = "gold"
+texture = ExtResource("2_dytpx")
+quantity = 1
+metadata/_custom_type_script = "uid://bn8e3yg5wxksn"

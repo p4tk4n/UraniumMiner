@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://boqjachb8hawk"]
+
+[ext_resource type="Script" uid="uid://bn8e3yg5wxksn" path="res://scripts/inventory_item.gd" id="1_f7nem"]
+[ext_resource type="Texture2D" uid="uid://b8phfgbhn31r4" path="res://sprites/bomb_icon.png" id="2_5ryyn"]
+
+[resource]
+script = ExtResource("1_f7nem")
+item_name = "bomb"
+texture = ExtResource("2_5ryyn")
+quantity = 1
+metadata/_custom_type_script = "uid://bn8e3yg5wxksn"

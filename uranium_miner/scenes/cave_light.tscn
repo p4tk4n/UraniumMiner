@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://wvlrgn6cmtt6"]
+
+[ext_resource type="Script" uid="uid://nifu3sg2o3qg" path="res://scripts/cave_light.gd" id="1_owrc8"]
+
+[sub_resource type="Gradient" id="Gradient_jxthf"]
+offsets = PackedFloat32Array(0, 0.7)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k0juu"]
+gradient = SubResource("Gradient_jxthf")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+
+[node name="CaveLight" type="PointLight2D"]
+top_level = true
+color = Color(0.8121398, 0.46841812, 0.18327758, 1)
+range_layer_max = 4
+texture = SubResource("GradientTexture2D_k0juu")
+texture_scale = 2.5
+script = ExtResource("1_owrc8")
+
+[node name="CaveLightTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="CaveLightTimer" to="." method="_on_cave_light_timer_timeout"]
