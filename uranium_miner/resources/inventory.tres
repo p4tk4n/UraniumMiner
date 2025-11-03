@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="Inventory" load_steps=10 format=3 uid="uid://c0nyighp00dqu"]
+[gd_resource type="Resource" script_class="Inventory" load_steps=11 format=3 uid="uid://c0nyighp00dqu"]
 
 [ext_resource type="Script" uid="uid://cnh4ogwsu7cj3" path="res://inv_slot.gd" id="2_3tbgx"]
 [ext_resource type="Script" uid="uid://kljdlxrrt50n" path="res://scripts/inventory.gd" id="2_7hhfx"]
+[ext_resource type="Resource" uid="uid://boqjachb8hawk" path="res://resources/bomb.tres" id="3_7hhfx"]
 
 [sub_resource type="Resource" id="Resource_3tbgx"]
 script = ExtResource("2_3tbgx")
+item = ExtResource("3_7hhfx")
+quantity = 10
 metadata/_custom_type_script = "uid://cnh4ogwsu7cj3"
 
 [sub_resource type="Resource" id="Resource_7hhfx"]

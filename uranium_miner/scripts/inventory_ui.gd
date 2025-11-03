@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 		global.current_hand_slot -= 1
 		move_highlight()
 	
-	for i in range(5):
+	for i in range(inv.slots.size()):
 		if Input.is_action_just_pressed("slot_"+str(i+1)):
 			global.current_hand_slot = i+1
 			move_highlight()

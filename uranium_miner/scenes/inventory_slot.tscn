@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ny8n0lj7yjx8"]
+[gd_scene load_steps=6 format=3 uid="uid://ny8n0lj7yjx8"]
 
+[ext_resource type="Theme" uid="uid://cupo73i60fr6h" path="res://themes/control_theme.tres" id="1_bbig2"]
 [ext_resource type="Texture2D" uid="uid://dj3jhnxf7w4le" path="res://sprites/inventory_item_slot.png" id="1_dxvxp"]
 [ext_resource type="Texture2D" uid="uid://dtb3pil07fbxb" path="res://sprites/gold_resource.png" id="2_bxqf6"]
 [ext_resource type="Script" uid="uid://c2b0scgw28iyu" path="res://scripts/inventory_slot.gd" id="2_hddt5"]
@@ -11,6 +12,7 @@ texture = ExtResource("1_dxvxp")
 custom_minimum_size = Vector2(32, 32)
 offset_right = 32.0
 offset_bottom = 32.0
+theme = ExtResource("1_bbig2")
 theme_override_styles/panel = SubResource("StyleBoxTexture_bxqf6")
 script = ExtResource("2_hddt5")
 
@@ -22,19 +24,16 @@ texture = ExtResource("2_bxqf6")
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -32.0
-offset_top = -32.0
-offset_right = 3967.9998
-offset_bottom = 4342.9995
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(0.008, 0.008)
-theme_override_font_sizes/font_size = 2000
+offset_left = 6.0
+offset_top = 12.5
+offset_right = 2.0
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
 text = "64"
 horizontal_alignment = 2
 vertical_alignment = 2

@@ -9,9 +9,12 @@ extends CharacterBody2D
 @onready var interact_bubble: Sprite2D = $InteractBubble
 @onready var inventory_ui: Control = $CanvasLayer/InventoryUI
 @onready var money_label: Label = $CanvasLayer/PlayerHUD/NinePatchRect/MoneyLabel
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var player_sprite: Sprite2D = $PlayerSprite
 @onready var player_hitbox: Area2D = $PlayerHitbox
+@onready var player_animations: AnimationPlayer = $PlayerAnimations
+@onready var tooltip: Control = $CanvasLayer/Tooltip
+@onready var anim_effects: AnimatedSprite2D = $AnimEffects
+@onready var walk_trail: CPUParticles2D = $PlayerSprite/WalkTrail
 
 @export var tilemap: TileMapLayer
 @export var mining_direction := Vector2.ZERO
@@ -39,6 +42,7 @@ var max_sin_val: float = 1.0
 var bubble_sin_value: float = 0.0
 var bubble_speed: float = 4.0
 var bubble_amplitude: float = 5.0
+var was_airborne: bool
 
 const CRACK_STAGES = 9  
 const BLOCK_TYPES = 5  
@@ -48,10 +52,17 @@ var ladder_atlas_pos: Vector2i = Vector2i(8,1)
 var can_climb: bool = false
 
 func _ready() -> void:
-	print(global.drop_amount())
 	camera.offset.y = camera_offset_y
 	inventory.update.connect(inventory_ui.update_slots)
 	money_label.text = str(global.player_money) + "$"
+	tooltip.visible = false
+	
+func show_tooltip(text):
+	tooltip.visible = true
+	tooltip.show_text(text)
+	await tooltip.finished_printing
+	await get_tree().create_timer(1.0).timeout
+	tooltip.visible = false
 	
 func show_interact_bubble():
 	can_interact = true
@@ -62,12 +73,26 @@ func hide_interact_bubble():
 	interact_bubble.visible = false
 
 func _physics_process(delta: float) -> void:
+	direction = Input.get_axis("player_left","player_right")
+	
 	if not is_on_floor():
 		velocity.y += gravity
+		was_airborne = true
 	
-	direction = Input.get_axis("player_left","player_right")
+	if velocity.x and is_on_floor():
+		walk_trail.emitting = true 
+	else:
+		walk_trail.emitting = false
+	
+	if velocity.y > 0:
+		anim_effects.visible = true
+		anim_effects.play("big_fall")
+	
 	if is_on_floor():
 		velocity.x = direction * normal_speed
+		if was_airborne:
+			show_fall_effect()
+			was_airborne = false
 	elif can_climb:
 		velocity.x = direction * normal_speed
 	else:
@@ -79,22 +104,22 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("player_jump") and can_climb:
 		velocity.y = -climb_velocity
 	
+	player_sprite.flip_h = false if direction > 0 else true
+	
 	if direction > 0:
-		player_sprite.flip_h = false
 		if is_mining:
-			animation_player.play("mining")
+			player_animations.play("mining")
 		else:
-			animation_player.play("idle")
+			player_animations.play("idle")
 		
 	elif direction < 0:
-		player_sprite.flip_h = true
 		if is_mining:
-			animation_player.play("mining")
+			player_animations.play("mining")
 		else:
-			animation_player.play("idle")
+			player_animations.play("idle")
 	
 	elif is_mining:
-		animation_player.play("mining")
+		player_animations.play("mining")
 	
 	move_and_slide()
 
@@ -130,8 +155,14 @@ func _process(delta: float) -> void:
 			inventory.update.emit()
 			spawn_bomb()
 
+func show_fall_effect():
+	anim_effects.visible = true
+	anim_effects.play("landing")
+	await anim_effects.animation_finished
+	anim_effects.visible = false
+	
 func spawn_bomb():
-	var bomb_instance = bomb_scene.instantiate()
+	var bomb_instance: Bomb = bomb_scene.instantiate()
 	bomb_instance.global_position = tilemap.map_to_local(tilemap.local_to_map(global_position))
 	bomb_instance.tilemap = tilemap
 	bomb_instance.player_inventory = inventory
@@ -224,7 +255,7 @@ func break_current_tile():
 		item.texture = global.tile_icons[tile_name]
 		if block_type == 7:
 			item.is_usable = true
-		inventory.insert(item)
+		inventory.insert(item,false)
 		
 func spawn_break_effect(tile_pos: Vector2i, block_type: int):
 	var world_pos = tilemap.map_to_local(tile_pos)

@@ -22,12 +22,20 @@ var show_cost
 var upgrade_name: String
 var current_level: int = 0
 var formated_name
-var sell_type = "upgrade" #or "item"
+var sell_type = "upgrade"
+
+var max_sin_val: float = 1.0
+var control_sin_value: float = 0.0
+var control_speed: float = 4.0
+var control_amplitude: float = 5.0
 
 func _ready() -> void:
-	name = UpgradeType.keys()[upgrades_value]
-	if name == "BOMB_SHOP" or "BOMB_RADIUS_SHOP":
+	print(upgrades_value)
+	name = UpgradeType.keys().get(upgrades_value)
+	
+	if name == "BOMB_SHOP" or name == "BOMB_RADIUS_SHOP":
 		sell_type = "item"
+	
 	sprite_2d.texture = upgrade_texture
 	cost_label.text = str(cost) + "$"
 	formated_name = name_string(name)
@@ -57,7 +65,14 @@ func _process(delta: float) -> void:
 		control.visible = true
 	else:
 		control.visible = false
-
+	
+	if control_sin_value > PI:
+		control_sin_value = -PI
+	
+	if control.visible:
+		control.global_position.y += sin(control_sin_value) * control_amplitude * delta
+		control_sin_value += control_speed * delta
+	
 func add_item_to_player(item_name):
 	var item = global.item_resources[item_name]
 	item.item_name = item_name
@@ -65,7 +80,7 @@ func add_item_to_player(item_name):
 	item.texture = global.tile_icons[item_name]
 	if item_name == "bomb":
 		item.is_usable = true
-	player.inventory.insert(item)
+	player.inventory.insert(item,true)
 
 func buy():
 	if sell_type == "upgrade":

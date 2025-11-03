@@ -18,14 +18,17 @@ func clear_slot():
 	slots[global.current_hand_slot-1].item = null
 	update.emit()
 
-func insert(item: InventoryItem):
+func insert(item: InventoryItem,is_from_shop=false):
 	# First, try to find existing slots with the same item
 	var existing_slots = slots.filter(func(slot): 
 		return slot.item == item
 	)
 	
 	if not existing_slots.is_empty():
-		existing_slots[0].quantity += global.drop_amount()
+		if not is_from_shop:
+			existing_slots[0].quantity += global.drop_amount()
+		else:
+			existing_slots[0].quantity += global.shop_item_amount
 		update.emit()
 		return
 	
@@ -36,6 +39,9 @@ func insert(item: InventoryItem):
 	
 	if not empty_slots.is_empty():
 		empty_slots[0].item = item
-		empty_slots[0].quantity = global.drop_amount()
+		if not is_from_shop:
+			empty_slots[0].quantity += global.drop_amount()
+		else:
+			empty_slots[0].quantity += global.shop_item_amount
 		update.emit()
 		return

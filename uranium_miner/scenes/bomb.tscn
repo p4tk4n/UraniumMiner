@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://h1ve46v4l7hx"]
+[gd_scene load_steps=10 format=3 uid="uid://h1ve46v4l7hx"]
 
 [ext_resource type="Script" uid="uid://c4wcl1mjprj2x" path="res://scripts/bomb.gd" id="1_4kkau"]
 [ext_resource type="Shader" uid="uid://cpt0gmkbh4e2l" path="res://shaders/bomb.gdshader" id="2_j15uc"]
 [ext_resource type="Texture2D" uid="uid://b8phfgbhn31r4" path="res://sprites/bomb_icon.png" id="2_vpdcx"]
-[ext_resource type="Texture2D" uid="uid://bv8tf3hw1swac" path="res://sprites/bomb_explosion_effect.png" id="4_84slv"]
 [ext_resource type="Texture2D" uid="uid://d23l4r1cnqfdq" path="res://sprites/explosion_particle.png" id="5_nxi8k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_84slv"]
@@ -13,42 +12,18 @@ shader_parameter/whiteness = 0.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_j15uc"]
 radius = 16.0
 
-[sub_resource type="Animation" id="Animation_nxi8k"]
-resource_name = "explode"
-step = 0.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("explosion:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.12601675, 0.26305225, 0.45518166, 0.644163, 0.88981223, 0.9969394),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 0, 1, 2, 3, 4, 5]
-}
+[sub_resource type="Curve" id="Curve_84slv"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="Animation" id="Animation_1hf1o"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("explosion:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
+[sub_resource type="Curve" id="Curve_nxi8k"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6162791, 0.7191012), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_56fam"]
-_data = {
-&"RESET": SubResource("Animation_1hf1o"),
-&"explode": SubResource("Animation_nxi8k")
-}
+[sub_resource type="Gradient" id="Gradient_1hf1o"]
+offsets = PackedFloat32Array(0, 0.7328767, 1)
+colors = PackedColorArray(0.903188, 0.5141774, 0.2792463, 1, 0.9294526, 0.76137483, 0.60164565, 1, 1, 1, 1, 1)
 
 [node name="Bomb" type="Node2D"]
 script = ExtResource("1_4kkau")
@@ -68,20 +43,11 @@ debug_color = Color(0.820553, 0.40303648, 1.92523e-07, 0.41960785)
 [node name="BoomTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_56fam")
-}
-
-[node name="explosion" type="Sprite2D" parent="."]
-texture = ExtResource("4_84slv")
-hframes = 7
-
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 16
 texture = ExtResource("5_nxi8k")
-lifetime = 0.2
+lifetime = 0.35000000000000003
 one_shot = true
 explosiveness = 1.0
 randomness = 0.1
@@ -92,7 +58,12 @@ initial_velocity_min = 80.0
 initial_velocity_max = 150.0
 angular_velocity_min = -20.0
 angular_velocity_max = 100.0
+damping_max = 10.0
+damping_curve = SubResource("Curve_84slv")
 angle_min = -20.0
 angle_max = 20.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_nxi8k")
+color_ramp = SubResource("Gradient_1hf1o")
 
 [connection signal="timeout" from="BoomTimer" to="." method="_on_boom_timer_timeout"]

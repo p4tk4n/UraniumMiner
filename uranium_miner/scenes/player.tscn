@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmg8m4gc6adp4"]
+[gd_scene load_steps=28 format=3 uid="uid://bmg8m4gc6adp4"]
 
 [ext_resource type="Script" uid="uid://csgi6voxl3lae" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://clfdu3rtnq0cg" path="res://sprites/player_spritesheet.png" id="2_g2els"]
@@ -6,13 +6,21 @@
 [ext_resource type="PackedScene" uid="uid://dmvpgvcx5h7mq" path="res://scenes/inventory_ui.tscn" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://d3hguy7tl362w" path="res://sprites/interact_message.png" id="5_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://b4akfd2js1ns1" path="res://sprites/inventory_slot.png" id="5_tuyoq"]
+[ext_resource type="Theme" uid="uid://cupo73i60fr6h" path="res://themes/control_theme.tres" id="5_ur7pv"]
 [ext_resource type="PackedScene" uid="uid://v6q7qxyilsne" path="res://scenes/tooltip.tscn" id="6_fjrip"]
+[ext_resource type="Texture2D" uid="uid://c8ggx2s60t7qs" path="res://sprites/player_fall_effect.png" id="8_smehm"]
+[ext_resource type="Texture2D" uid="uid://dlni8n4un5kb2" path="res://sprites/big_fall_effect.png" id="9_y4r1p"]
+[ext_resource type="Texture2D" uid="uid://cug5uo0cvgiyy" path="res://sprites/walk_trail_particle.png" id="11_d2wvv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 12.0
 
+[sub_resource type="Curve" id="Curve_3v2ag"]
+_data = [Vector2(0, 0.9887641), 0.0, 0.0, 0, 0, Vector2(1, 0.68539333), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-size = Vector2(14, 15)
+size = Vector2(10, 15)
 
 [sub_resource type="Animation" id="Animation_tuyoq"]
 length = 0.001
@@ -71,6 +79,80 @@ _data = {
 &"mining": SubResource("Animation_smehm")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
+atlas = ExtResource("9_y4r1p")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1ej7"]
+atlas = ExtResource("9_y4r1p")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oprun"]
+atlas = ExtResource("9_y4r1p")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
+atlas = ExtResource("9_y4r1p")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("8_smehm")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("8_smehm")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
+atlas = ExtResource("8_smehm")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
+atlas = ExtResource("8_smehm")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_smehm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jej6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1ej7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oprun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ls1")
+}],
+"loop": false,
+"name": &"big_fall",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v2ag")
+}],
+"loop": false,
+"name": &"landing",
+"speed": 12.0
+}]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 5
 script = ExtResource("1_3vyb7")
@@ -88,6 +170,22 @@ texture = ExtResource("2_g2els")
 hframes = 10
 vframes = 10
 frame = 20
+
+[node name="WalkTrail" type="CPUParticles2D" parent="PlayerSprite"]
+position = Vector2(-4, 7)
+amount = 20
+texture = ExtResource("11_d2wvv")
+lifetime = 0.5
+explosiveness = 0.1
+lifetime_randomness = 0.2
+direction = Vector2(-1, -1)
+spread = 25.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 12.0
+angle_min = -20.0
+angle_max = 20.0
+scale_amount_curve = SubResource("Curve_3v2ag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
@@ -129,6 +227,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("5_ur7pv")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/PlayerHUD"]
 layout_mode = 1
@@ -149,29 +248,31 @@ offset_right = 0.06399536
 offset_bottom = 0.06399536
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 32
 text = "9999 $"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Tooltip" parent="CanvasLayer" instance=ExtResource("6_fjrip")]
-visible = false
 anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
+anchor_top = 0.0
 anchor_bottom = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
 grow_vertical = 1
+size_flags_vertical = 0
 
 [node name="InteractBubble" type="Sprite2D" parent="."]
 z_index = 5
 position = Vector2(0, -18.888885)
 texture = ExtResource("5_qlg0r")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="PlayerAnimations" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_smehm")
 }
+
+[node name="AnimEffects" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1)
+sprite_frames = SubResource("SpriteFrames_smehm")
+animation = &"big_fall"
 
 [connection signal="timeout" from="MiningDelayTimer" to="." method="_on_mining_delay_timer_timeout"]
