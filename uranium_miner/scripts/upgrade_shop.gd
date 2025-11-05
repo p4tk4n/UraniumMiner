@@ -36,12 +36,12 @@ func _process(delta: float) -> void:
 				
 			current_upgrade.show_cost = true
 			can_buy_upgrade = true
-			player.show_interact_bubble()
+			SignalBus.show_interact_bubble.emit()
 	else:
 		if current_upgrade:
 			current_upgrade.show_cost = false
 		can_buy_upgrade = false
-		player.hide_interact_bubble()
+		SignalBus.hide_interact_bubble.emit()
 		
 func enter_level():
 	global.oncoming_scene = global.scenes["level"]
@@ -52,11 +52,11 @@ func switch_scenes(scene):
 
 func _on_level_entrance_area_entered(area: Area2D) -> void:
 	can_enter_level = true
-	player.show_interact_bubble()
+	SignalBus.show_interact_bubble.emit()
 
 func _on_level_entrance_area_exited(area: Area2D) -> void:
 	can_enter_level = false
-	player.hide_interact_bubble()
+	SignalBus.hide_interact_bubble.emit()
 
 func _on_resume_pressed() -> void:
 	pause_menu.hide()

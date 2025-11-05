@@ -173,6 +173,7 @@ frame = 20
 
 [node name="WalkTrail" type="CPUParticles2D" parent="PlayerSprite"]
 position = Vector2(-4, 7)
+emitting = false
 amount = 20
 texture = ExtResource("11_d2wvv")
 lifetime = 0.5

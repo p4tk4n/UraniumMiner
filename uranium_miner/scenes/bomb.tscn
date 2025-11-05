@@ -43,7 +43,7 @@ debug_color = Color(0.820553, 0.40303648, 1.92523e-07, 0.41960785)
 [node name="BoomTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="BoomEffect" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 16
 texture = ExtResource("5_nxi8k")

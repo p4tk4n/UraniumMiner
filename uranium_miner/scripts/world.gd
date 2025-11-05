@@ -33,7 +33,6 @@ func _process(delta: float) -> void:
 		elif can_enter_upgrade_shop:
 			enter_upgrade_shop()
 		
-		
 	if Input.is_action_just_pressed("ui_cancel"):
 		pause_menu.show()
 		get_tree().paused = true
@@ -52,33 +51,33 @@ func enter_cave():
 func _on_cave_entrance_area_entered(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
 		can_enter_mine = true
-		player.show_interact_bubble()
-		
+		SignalBus.show_interact_bubble.emit()
+
 func _on_cave_entrance_area_exited(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
 		can_enter_mine = false
-		player.hide_interact_bubble()
+		SignalBus.hide_interact_bubble.emit()
 	
 func _on_tutorial_sign_area_entered(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
-		player.show_interact_bubble()
+		SignalBus.show_interact_bubble.emit()
 		can_read_sign = true
 
 func _on_tutorial_sign_area_exited(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
-		player.hide_interact_bubble()
+		SignalBus.hide_interact_bubble.emit()
 		can_read_sign = false
 		tutorial.hide()
 
 func _on_trader_sign_area_entered(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
 		can_trade = true
-		player.show_interact_bubble()
+		SignalBus.show_interact_bubble.emit()
 
 func _on_trader_sign_area_exited(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
 		can_trade = false
-		player.hide_interact_bubble()
+		SignalBus.hide_interact_bubble.emit()
 		shop_ui.visible = false
 
 func _on_resume_pressed() -> void:
@@ -92,9 +91,9 @@ func _on_main_menu_button_pressed() -> void:
 func _on_upgrade_shop_entrance_area_entered(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
 		can_enter_upgrade_shop = true
-		player.show_interact_bubble()
+		SignalBus.show_interact_bubble.emit()
 
 func _on_upgrade_shop_entrance_area_exited(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
 		can_enter_upgrade_shop = false
-		player.hide_interact_bubble()
+		SignalBus.hide_interact_bubble.emit()

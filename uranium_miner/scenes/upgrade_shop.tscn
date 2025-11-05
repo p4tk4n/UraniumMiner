@@ -161,10 +161,16 @@ position = Vector2(680, 1030)
 position = Vector2(841, 1008)
 
 [node name="CaveLight6" parent="CaveLights" instance=ExtResource("4_ya5xe")]
-position = Vector2(1113, 1040)
+position = Vector2(1117, 1024)
+
+[node name="CaveLight10" parent="CaveLights" instance=ExtResource("4_ya5xe")]
+position = Vector2(1057, 1024)
+
+[node name="CaveLight11" parent="CaveLights" instance=ExtResource("4_ya5xe")]
+position = Vector2(997, 1024)
 
 [node name="CaveLight7" parent="CaveLights" instance=ExtResource("4_ya5xe")]
-position = Vector2(1148, 1040)
+position = Vector2(1177, 1024)
 
 [node name="CaveLight8" parent="CaveLights" instance=ExtResource("4_ya5xe")]
 position = Vector2(616, 950)

@@ -35,7 +35,6 @@ func move_highlight():
 	highlight.position = Vector2((global.current_hand_slot * 36)-20,16)
 	
 func update_slots():
-	print("slots updated")
 	for i in range(min(inv.slots.size(), slots.size())):
 		slots[i].update(inv.slots[i])
 		

@@ -2,7 +2,7 @@ extends Control
 
 @export var player: CharacterBody2D
 
-@onready var slot_to_sell: Label = $NinePatchRect/BoxContainer/SellContainer/NinePatchRect/SlotToSell
+@onready var slot_to_sell: Label = $NinePatchRect/BoxContainer/SellContainer/NinePatchRect/ReceivedAmount
 
 func _ready() -> void:
 	pass

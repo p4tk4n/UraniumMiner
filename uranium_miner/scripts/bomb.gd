@@ -4,7 +4,7 @@ extends Node2D
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var boom_timer: Timer = $BoomTimer
 @onready var bomb_sprite: Sprite2D = $BombSprite
-@onready var cpu_particles_2d: CPUParticles2D = $CPUParticles2D
+@onready var boom_effect: CPUParticles2D = $BoomEffect
 
 var player_inventory
 var tilemap
@@ -76,7 +76,8 @@ func update_whitening_effect():
 	bomb_sprite.material.set_shader_parameter("whiteness", progress)
 
 func blow():
-	cpu_particles_2d.emitting = true
+	boom_effect.scale_amount_max = global.bomb_radius * 2.0
+	boom_effect.emitting = true
 	bomb_sprite.material.set_shader_parameter("whiteness", 1.5)
 	destroy_tiles_in_radius()
 	await get_tree().create_timer(0.5).timeout
