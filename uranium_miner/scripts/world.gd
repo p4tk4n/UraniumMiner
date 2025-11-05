@@ -2,8 +2,6 @@ extends Node2D
 
 @onready var cave_entrance: Area2D = $CaveEntrance
 @onready var tutorial_sign: Area2D = $TutorialSign
-@onready var loading_screen = load("res://scenes/loading_screen.tscn")
-@onready var main_menu_scene = load("res://scenes/main_menu.tscn")
 @onready var player: CharacterBody2D = $Player
 @onready var tutorial: Sprite2D = $Tutorial
 @onready var trader_sign: Area2D = $TraderSign
@@ -17,7 +15,7 @@ var can_trade = false
 var can_enter_upgrade_shop = false
 
 func _ready() -> void:
-	player.camera_offset_y = -150.0
+	global.current_camera_offset = global.level_camera_offset
 	shop_ui.visible = false
 	player.tilemap = level
 	level.name = "level"
@@ -34,19 +32,14 @@ func _process(delta: float) -> void:
 			enter_upgrade_shop()
 		
 	if Input.is_action_just_pressed("ui_cancel"):
-		pause_menu.show()
+		pause_menu.visible = true
 		get_tree().paused = true
-	
-func switch_scenes(scene):
-	get_tree().change_scene_to_packed(scene)
-
+			
 func enter_upgrade_shop():
-	global.oncoming_scene = "res://scenes/upgrade_shop.tscn"
-	switch_scenes(loading_screen)
+	SceneChanger.switch_scene(global.scenes["upgrade"])
 
 func enter_cave():
-	global.oncoming_scene = "res://scenes/mine.tscn"
-	switch_scenes(loading_screen)
+	SceneChanger.switch_scene(global.scenes["cave"])
 
 func _on_cave_entrance_area_entered(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):
@@ -86,7 +79,7 @@ func _on_resume_pressed() -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	get_tree().paused = false
-	switch_scenes(main_menu_scene)
+	SceneChanger.switch_scene(global.scenes["menu"])
 	
 func _on_upgrade_shop_entrance_area_entered(area: Area2D) -> void:
 	if area.owner.is_in_group("player"):

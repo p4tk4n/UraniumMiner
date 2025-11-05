@@ -19,6 +19,7 @@ config/icon="uid://dnlfwcpou76gh"
 
 global="*res://scripts/global.gd"
 SignalBus="*res://scripts/signal_bus.gd"
+SceneChanger="*res://scripts/scene_changer.gd"
 
 [display]
 

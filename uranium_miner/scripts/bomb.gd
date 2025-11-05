@@ -78,6 +78,7 @@ func update_whitening_effect():
 func blow():
 	boom_effect.scale_amount_max = global.bomb_radius * 2.0
 	boom_effect.emitting = true
+	SignalBus.screen_shake.emit()
 	bomb_sprite.material.set_shader_parameter("whiteness", 1.5)
 	destroy_tiles_in_radius()
 	await get_tree().create_timer(0.5).timeout

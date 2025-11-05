@@ -56,5 +56,5 @@ grow_vertical = 2
 [node name="TooltipText" type="Label" parent="MarginContainer/NinePatchRect/BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Hello niger"
+text = "Whatsupp"
 vertical_alignment = 1

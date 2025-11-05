@@ -18,12 +18,12 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_nxi8k"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6162791, 0.7191012), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.75000006, 0.6741574), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_1hf1o"]
-offsets = PackedFloat32Array(0, 0.7328767, 1)
-colors = PackedColorArray(0.903188, 0.5141774, 0.2792463, 1, 0.9294526, 0.76137483, 0.60164565, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.5684931, 0.7876712, 1)
+colors = PackedColorArray(0.903188, 0.5141774, 0.2792463, 1, 0.9294526, 0.76137483, 0.60164565, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Bomb" type="Node2D"]
 script = ExtResource("1_4kkau")
@@ -58,7 +58,7 @@ initial_velocity_min = 80.0
 initial_velocity_max = 150.0
 angular_velocity_min = -20.0
 angular_velocity_max = 100.0
-damping_max = 10.0
+damping_max = 15.0
 damping_curve = SubResource("Curve_84slv")
 angle_min = -20.0
 angle_max = 20.0

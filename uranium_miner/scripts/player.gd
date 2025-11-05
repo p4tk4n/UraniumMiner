@@ -52,7 +52,6 @@ var ladder_atlas_pos: Vector2i = Vector2i(8,1)
 var can_climb: bool = false
 
 func _ready() -> void:
-	camera.offset.y = camera_offset_y
 	inventory.update.connect(inventory_ui.update_slots)
 	money_label.text = str(global.player_money) + "$"
 	tooltip.visible = false
@@ -107,7 +106,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("player_jump") and can_climb:
 		velocity.y = -climb_velocity
 	
-	player_sprite.flip_h = false if direction > 0 else true
+	if direction < 0:
+		player_sprite.flip_h = true
+	elif direction > 0:
+		player_sprite.flip_h = false
 	
 	if direction > 0:
 		if is_mining:

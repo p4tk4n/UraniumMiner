@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://bmg8m4gc6adp4"]
+[gd_scene load_steps=29 format=3 uid="uid://bmg8m4gc6adp4"]
 
 [ext_resource type="Script" uid="uid://csgi6voxl3lae" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://clfdu3rtnq0cg" path="res://sprites/player_spritesheet.png" id="2_g2els"]
 [ext_resource type="Resource" uid="uid://c0nyighp00dqu" path="res://resources/inventory.tres" id="2_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://dmvpgvcx5h7mq" path="res://scenes/inventory_ui.tscn" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://fl1yru65lsdx" path="res://scripts/camera.gd" id="5_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://d3hguy7tl362w" path="res://sprites/interact_message.png" id="5_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://b4akfd2js1ns1" path="res://sprites/inventory_slot.png" id="5_tuyoq"]
 [ext_resource type="Theme" uid="uid://cupo73i60fr6h" path="res://themes/control_theme.tres" id="5_ur7pv"]
@@ -194,6 +195,7 @@ shape = SubResource("RectangleShape2D_g2els")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -150)
+script = ExtResource("5_3v2ag")
 
 [node name="MiningRaycast" type="RayCast2D" parent="."]
 target_position = Vector2(-25, 0)

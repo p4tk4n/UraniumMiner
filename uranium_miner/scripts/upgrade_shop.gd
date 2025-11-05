@@ -44,12 +44,8 @@ func _process(delta: float) -> void:
 		SignalBus.hide_interact_bubble.emit()
 		
 func enter_level():
-	global.oncoming_scene = global.scenes["level"]
-	switch_scenes(loading_screen)
+	SceneChanger.switch_scene(global.scenes["level"])
 	
-func switch_scenes(scene):
-	get_tree().change_scene_to_file(scene)
-
 func _on_level_entrance_area_entered(area: Area2D) -> void:
 	can_enter_level = true
 	SignalBus.show_interact_bubble.emit()
@@ -64,4 +60,4 @@ func _on_resume_pressed() -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	get_tree().paused = false
-	switch_scenes(global.scenes["menu"])
+	SceneChanger.switch_scene(global.scenes["menu"])

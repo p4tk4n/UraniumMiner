@@ -8,9 +8,6 @@ extends Node2D
 @onready var return_sign: Area2D = $ReturnSign
 @onready var pause_menu: CanvasLayer = $PauseMenu
 
-var cave_path = "res://scenes/world.tscn"
-var main_menu_path = "res://scenes/main_menu.tscn"
-
 var player
 var tile_type
 var can_return
@@ -19,13 +16,11 @@ var pickaxe_deco_atlas_pos = Vector2i(0,1)
 var lantern_deco_atlas_pos = Vector2i(5,1)
 
 func _ready() -> void:
+	global.current_camera_offset = Vector2.ZERO
 	generate_mine_map()
 	cave_light_timer.start(randf_range(0.5,1))
 	mine_tilemap.name = "cave"
 	return_sign.name = "return_sign"
-	
-func switch_scenes(scene):
-	get_tree().change_scene_to_file(scene)
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -33,7 +28,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().paused = true
 		
 	if Input.is_action_just_pressed("player_interact") and can_return:
-		call_deferred("switch_scenes",cave_path)
+		SceneChanger.switch_scene(global.scenes["level"])
 		
 func spawn_player(map_mid):
 	player = player_scene.instantiate()
@@ -90,11 +85,11 @@ func _on_return_sign_area_exited(area: Area2D) -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	get_tree().paused = false
-	switch_scenes(main_menu_path)
+	SceneChanger.switch_scene(global.scenes["menu"])
 	
 func _on_lobby_button_pressed() -> void:
 	get_tree().paused = false
-	switch_scenes(cave_path)
+	SceneChanger.switch_scene(global.scenes["level"])
 	
 func _on_resume_button_pressed() -> void:
 	get_tree().paused = false

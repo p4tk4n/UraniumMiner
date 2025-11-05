@@ -1,7 +1,8 @@
 extends Node
 
 var map_size = Vector2(64,64)
-var level_camera_offset = -100.0
+var level_camera_offset = Vector2(0,-100)
+var current_camera_offset = Vector2(0,-100)
 var tile_size = 16
 
 var drops_per_tile := 1
