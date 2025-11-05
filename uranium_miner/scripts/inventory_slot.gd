@@ -13,4 +13,3 @@ func update(slot: InventorySlot):
 			item_quantity.visible = true
 			item_display.texture = slot.item.texture	
 			item_quantity.text = str(slot.quantity)
-			print((slot.item.item_name) + str(slot.item.quantity))

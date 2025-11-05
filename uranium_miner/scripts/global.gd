@@ -6,7 +6,7 @@ var tile_size = 16
 
 var drops_per_tile := 1
 var current_hand_slot = 1
-var player_money = 0
+var player_money = 1000
 var shop_item_amount = 1
 
 var bomb_radius = 1 #in tiles

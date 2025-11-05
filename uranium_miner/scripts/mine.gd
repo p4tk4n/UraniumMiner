@@ -60,7 +60,6 @@ func generate_mine_map():
 				tile_type = global.tiles.get("bomb")
 			if chance < global.tile_weights["uranium"]:
 				tile_type = global.tiles.get("uranium")
-				print("!!!is uranium!!!")
 			
 			mine_tilemap.set_cell(Vector2i(x,y),0,tile_type)
 

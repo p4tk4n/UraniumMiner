@@ -30,7 +30,6 @@ var control_speed: float = 4.0
 var control_amplitude: float = 5.0
 
 func _ready() -> void:
-	print(upgrades_value)
 	name = UpgradeType.keys().get(upgrades_value)
 	
 	if name == "BOMB_SHOP" or name == "BOMB_RADIUS_SHOP":
@@ -85,7 +84,6 @@ func add_item_to_player(item_name):
 func buy():
 	if sell_type == "upgrade":
 		current_level += 1
-		print(name.to_lower())
 		global.player_stats[name.to_lower()] += upgrade_power
 		global.player_money -= cost
 		cost *= 1.2
