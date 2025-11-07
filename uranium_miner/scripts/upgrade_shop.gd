@@ -11,6 +11,7 @@ var current_upgrade
 var previous_upgrade
 
 func _ready() -> void:
+	self.name = "shop"
 	shop_tilemap.name = "shop"
 	player.tilemap = shop_tilemap
 	

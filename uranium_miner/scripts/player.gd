@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var tooltip: Control = $CanvasLayer/Tooltip
 @onready var anim_effects: AnimatedSprite2D = $AnimEffects
 @onready var walk_trail: CPUParticles2D = $PlayerSprite/WalkTrail
+@onready var vignette_rect: ColorRect = $CanvasLayer/VignetteRect
 
 @export var tilemap: TileMapLayer
 @export var mining_direction := Vector2.ZERO
@@ -52,29 +53,54 @@ var ladder_atlas_pos: Vector2i = Vector2i(8,1)
 var can_climb: bool = false
 
 func _ready() -> void:
+	if get_tree().current_scene.name == "mine":
+		vignette_rect.visible = true
+	else:
+		vignette_rect.visible = false
+		
 	inventory.update.connect(inventory_ui.update_slots)
 	money_label.text = str(global.player_money) + "$"
 	tooltip.visible = false
 	
+	#vignette_rect.visible = false
+	
+	player_sprite.flip_h = true
+	
 	SignalBus.show_interact_bubble.connect(show_interact_bubble)
 	SignalBus.hide_interact_bubble.connect(hide_interact_bubble)
 	
+	SignalBus.show_cutout.connect(show_cutout)
+	SignalBus.hide_cutout.connect(hide_cutout)
+
+func show_cutout():
+	tween_cutout(150.0, 0.1)
+func hide_cutout():
+	tween_cutout(210.0, 0.1)
+func tween_cutout(new_size, duration):
+	var mat = vignette_rect.material as ShaderMaterial
+	var tween = create_tween()
+	
+	var current_cutout = mat.get_shader_parameter("cutout_size")
+	
+	tween.tween_method(
+		func(value): mat.set_shader_parameter("cutout_size", value),
+		current_cutout, new_size, duration
+	)
 func show_tooltip(text):
 	tooltip.visible = true
 	tooltip.show_text(text)
 	await tooltip.finished_printing
 	await get_tree().create_timer(1.0).timeout
 	tooltip.visible = false
-	
 func show_interact_bubble():
 	can_interact = true
 	interact_bubble.visible = true
-
 func hide_interact_bubble():
 	can_interact = false
 	interact_bubble.visible = false
 
 func _physics_process(delta: float) -> void:
+	if get_tree().paused: return
 	direction = Input.get_axis("player_left","player_right")
 	
 	if not is_on_floor():

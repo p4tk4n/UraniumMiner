@@ -15,6 +15,7 @@ var can_trade = false
 var can_enter_upgrade_shop = false
 
 func _ready() -> void:
+	self.name = "level"
 	global.current_camera_offset = global.level_camera_offset
 	shop_ui.visible = false
 	player.tilemap = level

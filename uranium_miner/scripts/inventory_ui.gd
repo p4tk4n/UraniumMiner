@@ -10,6 +10,7 @@ func _ready() -> void:
 	inv.update.connect(update_slots)
 	#close()
 	update_slots()
+	move_highlight()
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("player_inventory"):
@@ -32,6 +33,7 @@ func _process(delta: float) -> void:
 			move_highlight()
 			
 func move_highlight():
+	print(global.current_hand_slot)
 	highlight.position = Vector2((global.current_hand_slot * 36)-20,16)
 	
 func update_slots():

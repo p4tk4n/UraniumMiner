@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bmg8m4gc6adp4"]
+[gd_scene load_steps=31 format=3 uid="uid://bmg8m4gc6adp4"]
 
 [ext_resource type="Script" uid="uid://csgi6voxl3lae" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://clfdu3rtnq0cg" path="res://sprites/player_spritesheet.png" id="2_g2els"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://v6q7qxyilsne" path="res://scenes/tooltip.tscn" id="6_fjrip"]
 [ext_resource type="Texture2D" uid="uid://c8ggx2s60t7qs" path="res://sprites/player_fall_effect.png" id="8_smehm"]
 [ext_resource type="Texture2D" uid="uid://dlni8n4un5kb2" path="res://sprites/big_fall_effect.png" id="9_y4r1p"]
+[ext_resource type="Shader" uid="uid://cyd3u68e1tr5m" path="res://shaders/vignette.gdshader" id="10_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cug5uo0cvgiyy" path="res://sprites/walk_trail_particle.png" id="11_d2wvv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
@@ -22,6 +23,11 @@ point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
 size = Vector2(10, 15)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1ej7"]
+shader = ExtResource("10_jej6c")
+shader_parameter/cutout_size = 150.0
+shader_parameter/fade_width = 50.0
 
 [sub_resource type="Animation" id="Animation_tuyoq"]
 length = 0.001
@@ -155,6 +161,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+process_mode = 3
 z_index = 5
 script = ExtResource("1_3vyb7")
 inventory = ExtResource("2_qhqgy")
@@ -262,6 +269,17 @@ anchor_top = 0.0
 anchor_bottom = 0.0
 grow_vertical = 1
 size_flags_vertical = 0
+
+[node name="VignetteRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+material = SubResource("ShaderMaterial_f1ej7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.101960786, 0.101960786, 0.14117648, 1)
 
 [node name="InteractBubble" type="Sprite2D" parent="."]
 z_index = 5

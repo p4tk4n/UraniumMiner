@@ -1,6 +1,6 @@
 extends Node
 
-var map_size = Vector2(64,64)
+var map_size = Vector2(64,128)
 var level_camera_offset = Vector2(0,-100)
 var current_camera_offset = Vector2(0,-100)
 var tile_size = 16
@@ -15,8 +15,8 @@ var usable_items = ["bomb",""]
 var oncoming_scene: NodePath
 
 var player_stats = {
-	"mining_speed": 2.0,
-	"mining_fortune": 1
+	"mining_speed": 0.0, #2.0 def
+	"mining_fortune": 1 #1 def
 }
 
 func drop_amount():
@@ -47,7 +47,8 @@ var tiles = {
 	"gold": Vector2(0,4),
 	"diamond": Vector2(0,5),
 	"uranium": Vector2(0,6),
-	"bomb": Vector2(0,7)
+	"bomb": Vector2(0,7),
+	"barrier": Vector2(0,8)
 }
 
 var tile_icons = {
