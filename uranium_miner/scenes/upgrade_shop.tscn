@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=4 uid="uid://b2jcwq61byocm"]
+[gd_scene load_steps=18 format=4 uid="uid://b2jcwq61byocm"]
 
 [ext_resource type="Script" uid="uid://d1gfkwdgkrjg5" path="res://scripts/upgrade_shop.gd" id="1_v8ny2"]
 [ext_resource type="Texture2D" uid="uid://bcuqfdntqmmht" path="res://sprites/level_spritesheet.png" id="2_mfja5"]
 [ext_resource type="PackedScene" uid="uid://bmg8m4gc6adp4" path="res://scenes/player.tscn" id="3_ya5xe"]
 [ext_resource type="PackedScene" uid="uid://wvlrgn6cmtt6" path="res://scenes/cave_light.tscn" id="4_ya5xe"]
 [ext_resource type="Texture2D" uid="uid://b4akfd2js1ns1" path="res://sprites/inventory_slot.png" id="5_qu5s7"]
+[ext_resource type="Texture2D" uid="uid://crapu003avvv3" path="res://sprites/color_snap_palette.png" id="6_gc2o6"]
 [ext_resource type="Theme" uid="uid://co0t04pkj8m4q" path="res://themes/button_theme.tres" id="6_o5je6"]
 [ext_resource type="Texture2D" uid="uid://d24iq6drdtui8" path="res://sprites/resume_button.png" id="7_lt0d2"]
 [ext_resource type="Texture2D" uid="uid://cbojuajek6ym" path="res://sprites/back_arrow.png" id="8_mndg8"]
@@ -12,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c65l2d2kxsohl" path="res://sprites/pickaxe_speed_upgrade.png" id="10_lt0d2"]
 [ext_resource type="Texture2D" uid="uid://bnkkp8welhwhk" path="res://sprites/mining_fortune_upgrade.png" id="11_mndg8"]
 [ext_resource type="Texture2D" uid="uid://cjxpbtl5tva1r" path="res://sprites/bomb_buy_table.png" id="12_q1psx"]
+[ext_resource type="PackedScene" uid="uid://b0gr6v76knw52" path="res://scenes/color_snap_shader.tscn" id="13_8goot"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_54pk2"]
 texture = ExtResource("2_mfja5")
@@ -183,6 +185,9 @@ position = Vector2(841, 1008)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelEntrance"]
 shape = SubResource("CircleShape2D_ya5xe")
+
+[node name="ColorSnapShader" parent="." instance=ExtResource("13_8goot")]
+palette = ExtResource("6_gc2o6")
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
 process_mode = 3

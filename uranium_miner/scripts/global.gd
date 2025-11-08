@@ -15,7 +15,7 @@ var usable_items = ["bomb",""]
 var oncoming_scene: NodePath
 
 var player_stats = {
-	"mining_speed": 0.0, #2.0 def
+	"mining_speed": 2.0, #2.0 def
 	"mining_fortune": 1 #1 def
 }
 

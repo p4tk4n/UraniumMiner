@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0gr6v76knw52"]
+
+[ext_resource type="Script" uid="uid://dndottatnlabg" path="res://scripts/color_snap_shader.gd" id="1_fmayf"]
+[ext_resource type="Shader" uid="uid://otut8wblyvt8" path="res://shaders/color_snap.gdshader" id="1_pb3nd"]
+[ext_resource type="Texture2D" uid="uid://crapu003avvv3" path="res://sprites/color_snap_palette.png" id="2_fmayf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_plt5w"]
+shader = ExtResource("1_pb3nd")
+shader_parameter/palette = ExtResource("2_fmayf")
+
+[node name="ColorSnapShader" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_fmayf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_plt5w")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

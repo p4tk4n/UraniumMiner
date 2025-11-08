@@ -6,7 +6,7 @@ var progress = []
 var scene_name
 var scene_load_status = 0.0
 var can_load = false
-var load_speed = 1.0
+var load_speed = 200.0
 
 func _ready() -> void:
 	scene_name = global.oncoming_scene
@@ -17,7 +17,7 @@ static func map(value: float, from_min: float, from_max: float, to_min: float, t
 
 func _process(delta: float) -> void:
 	scene_load_status = ResourceLoader.load_threaded_get_status(scene_name,progress)
-	loading_bar.value += load_speed
+	loading_bar.value += load_speed * delta
 	
 	if loading_bar.value >= 100:
 		can_load = true

@@ -1,12 +1,14 @@
-[gd_scene load_steps=16 format=4 uid="uid://dy25koxdxtt30"]
+[gd_scene load_steps=18 format=4 uid="uid://dy25koxdxtt30"]
 
 [ext_resource type="Texture2D" uid="uid://drgoxh1on47k0" path="res://sprites/mine_spritesheet.png" id="1_kqr42"]
 [ext_resource type="Script" uid="uid://fn2aqq066iky" path="res://scripts/mine.gd" id="1_m55k0"]
 [ext_resource type="Texture2D" uid="uid://bcuqfdntqmmht" path="res://sprites/level_spritesheet.png" id="3_m55k0"]
+[ext_resource type="PackedScene" uid="uid://b0gr6v76knw52" path="res://scenes/color_snap_shader.tscn" id="4_21nlm"]
 [ext_resource type="Theme" uid="uid://cupo73i60fr6h" path="res://themes/control_theme.tres" id="4_gcxd8"]
 [ext_resource type="Texture2D" uid="uid://b4akfd2js1ns1" path="res://sprites/inventory_slot.png" id="4_j4qwv"]
 [ext_resource type="Theme" uid="uid://co0t04pkj8m4q" path="res://themes/button_theme.tres" id="5_7f736"]
 [ext_resource type="Texture2D" uid="uid://d24iq6drdtui8" path="res://sprites/resume_button.png" id="5_abhb0"]
+[ext_resource type="Texture2D" uid="uid://crapu003avvv3" path="res://sprites/color_snap_palette.png" id="5_plt5w"]
 [ext_resource type="Texture2D" uid="uid://dnlfwcpou76gh" path="res://sprites/cave_icon.png" id="6_kxfpg"]
 [ext_resource type="Texture2D" uid="uid://c8xn2c3ambcfq" path="res://sprites/entrance_icon.png" id="8_u4wor"]
 [ext_resource type="PackedScene" uid="uid://wvlrgn6cmtt6" path="res://scenes/cave_light.tscn" id="10_u4wor"]
@@ -288,6 +290,9 @@ tile_set = SubResource("TileSet_ku5q0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ReturnSign"]
 shape = SubResource("CircleShape2D_m55k0")
+
+[node name="ColorSnapShader" parent="." instance=ExtResource("4_21nlm")]
+palette = ExtResource("5_plt5w")
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
 process_mode = 3
