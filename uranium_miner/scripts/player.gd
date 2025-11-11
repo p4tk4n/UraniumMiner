@@ -49,7 +49,7 @@ const CRACK_STAGES = 9
 const BLOCK_TYPES = 5  
 
 var current_touched_tile
-var ladder_atlas_pos: Vector2i = Vector2i(18,0)
+var ladder_atlas_pos = global.ladder_atlas_position
 var can_climb: bool = false
 
 func _ready() -> void:

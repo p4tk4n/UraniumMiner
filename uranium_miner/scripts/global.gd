@@ -14,6 +14,8 @@ var bomb_radius = 1 #in tiles
 var usable_items = ["bomb",""]
 var oncoming_scene: NodePath
 
+var ladder_atlas_position = Vector2i(13,1)
+
 var player_stats = {
 	"mining_speed": 2.0, #2.0 def
 	"mining_fortune": 1 #1 def
