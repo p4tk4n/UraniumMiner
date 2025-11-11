@@ -21,8 +21,8 @@ extends CharacterBody2D
 @export var mining_direction := Vector2.ZERO
 @export var inventory: Inventory
 
-var normal_speed := 250.0
-var airborne_speed := 270.0
+var normal_speed := 210.0
+var airborne_speed := normal_speed * 1.3
 
 var gravity := 42.0
 var jump_velocity: float = 450.0
@@ -49,7 +49,7 @@ const CRACK_STAGES = 9
 const BLOCK_TYPES = 5  
 
 var current_touched_tile
-var ladder_atlas_pos: Vector2i = Vector2i(8,1)
+var ladder_atlas_pos: Vector2i = Vector2i(18,0)
 var can_climb: bool = false
 
 func _ready() -> void:

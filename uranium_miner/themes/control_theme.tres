@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://cupo73i60fr6h"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://cupo73i60fr6h"]
 
 [ext_resource type="FontFile" uid="uid://baqsoc70ndqkh" path="res://fonts/ByteBounce.ttf" id="1_6aspm"]
 [ext_resource type="Texture2D" uid="uid://dnsgiwq5olp43" path="res://sprites/button_hover_panel.png" id="2_fnt4t"]
 [ext_resource type="Texture2D" uid="uid://b5e2s6fyb8cno" path="res://sprites/button_panel.png" id="3_lbdbw"]
 [ext_resource type="Texture2D" uid="uid://baixuxt8m2664" path="res://sprites/button_pressed_panel.png" id="4_2yg3h"]
+[ext_resource type="Texture2D" uid="uid://dppv7vs8h40ua" path="res://sprites/panel.png" id="5_lbdbw"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tcqe2"]
 
@@ -16,6 +17,9 @@ texture = ExtResource("3_lbdbw")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6b7sg"]
 texture = ExtResource("4_2yg3h")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2yg3h"]
+texture = ExtResource("5_lbdbw")
+
 [resource]
 default_font = ExtResource("1_6aspm")
 default_font_size = 24
@@ -27,3 +31,4 @@ Button/styles/normal = SubResource("StyleBoxTexture_21qo1")
 Button/styles/pressed = SubResource("StyleBoxTexture_6b7sg")
 Label/font_sizes/font_size = 30
 Label/fonts/font = ExtResource("1_6aspm")
+Panel/styles/panel = SubResource("StyleBoxTexture_2yg3h")

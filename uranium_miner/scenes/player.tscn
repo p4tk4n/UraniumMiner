@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bmg8m4gc6adp4"]
+[gd_scene load_steps=33 format=3 uid="uid://bmg8m4gc6adp4"]
 
 [ext_resource type="Script" uid="uid://csgi6voxl3lae" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://clfdu3rtnq0cg" path="res://sprites/player_spritesheet.png" id="2_g2els"]
@@ -14,6 +14,7 @@
 [ext_resource type="Shader" uid="uid://cyd3u68e1tr5m" path="res://shaders/vignette.gdshader" id="10_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cug5uo0cvgiyy" path="res://sprites/walk_trail_particle.png" id="11_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://wvlrgn6cmtt6" path="res://scenes/cave_light.tscn" id="14_f1ej7"]
+[ext_resource type="PackedScene" uid="uid://b2htm0dhiijku" path="res://scenes/upgrade_ui.tscn" id="15_oprun"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 12.0
@@ -281,6 +282,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.101960786, 0.101960786, 0.14117648, 1)
+
+[node name="UpgradeUI" parent="CanvasLayer" instance=ExtResource("15_oprun")]
+visible = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="InteractBubble" type="Sprite2D" parent="."]
 z_index = 5

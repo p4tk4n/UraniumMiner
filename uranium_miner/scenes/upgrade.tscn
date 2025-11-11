@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://b83n3smvt5xt6"]
+
+[ext_resource type="Shader" uid="uid://cpxamvthusas2" path="res://shaders/upgrade_ui.gdshader" id="1_346kr"]
+[ext_resource type="Theme" uid="uid://cupo73i60fr6h" path="res://themes/control_theme.tres" id="1_xsw34"]
+[ext_resource type="Texture2D" uid="uid://cpfgtjk8h0mpm" path="res://sprites/mining_speed_upgrade_icon.png" id="2_b2g4b"]
+[ext_resource type="Script" uid="uid://cln5jk06sud2t" path="res://scripts/upgrade.gd" id="2_g1npk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00gwf"]
+shader = ExtResource("1_346kr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jnjjj"]
+shader = ExtResource("1_346kr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_346kr"]
+shader = ExtResource("1_346kr")
+
+[node name="Upgrade" type="Panel"]
+material = SubResource("ShaderMaterial_00gwf")
+custom_minimum_size = Vector2(64, 128)
+offset_right = 32.0
+offset_bottom = 40.5
+theme = ExtResource("1_xsw34")
+script = ExtResource("2_g1npk")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+alignment = 1
+vertical = true
+
+[node name="TextureRect" type="TextureRect" parent="BoxContainer"]
+material = SubResource("ShaderMaterial_jnjjj")
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_b2g4b")
+
+[node name="PurchaseButton" type="Button" parent="BoxContainer"]
+material = SubResource("ShaderMaterial_346kr")
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 16
+text = "Mining Speed 0"
+autowrap_mode = 2
+
+[node name="CostLabel" type="Label" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 16
+text = "Cost: 999$"
+horizontal_alignment = 1
+vertical_alignment = 1

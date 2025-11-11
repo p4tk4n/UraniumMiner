@@ -1,0 +1,121 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2htm0dhiijku"]
+
+[ext_resource type="Shader" uid="uid://cpxamvthusas2" path="res://shaders/upgrade_ui.gdshader" id="1_gbnav"]
+[ext_resource type="Theme" uid="uid://cupo73i60fr6h" path="res://themes/control_theme.tres" id="1_k1o73"]
+[ext_resource type="PackedScene" uid="uid://b83n3smvt5xt6" path="res://scenes/upgrade.tscn" id="2_jc35x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ij7f"]
+shader = ExtResource("1_gbnav")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gbnav"]
+shader = ExtResource("1_gbnav")
+
+[node name="UpgradeUI" type="Control"]
+material = SubResource("ShaderMaterial_6ij7f")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_k1o73")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="MenuBackground" type="Panel" parent="MarginContainer"]
+material = SubResource("ShaderMaterial_gbnav")
+layout_mode = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer/MenuBackground"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SidePanel" type="BoxContainer" parent="MarginContainer/MenuBackground/BoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/MenuBackground/BoxContainer/SidePanel"]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UpgradeMenus" type="GridContainer" parent="MarginContainer/MenuBackground/BoxContainer/SidePanel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu1" type="Button" parent="MarginContainer/MenuBackground/BoxContainer/SidePanel/Panel/UpgradeMenus"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 32
+text = "Upgrades"
+autowrap_mode = 2
+
+[node name="Menu2" type="Button" parent="MarginContainer/MenuBackground/BoxContainer/SidePanel/Panel/UpgradeMenus"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 32
+text = "Items"
+autowrap_mode = 2
+
+[node name="Menu3" type="Button" parent="MarginContainer/MenuBackground/BoxContainer/SidePanel/Panel/UpgradeMenus"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 32
+text = "Skills"
+autowrap_mode = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer/MenuBackground/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Upgrades" type="GridContainer" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 50
+columns = 5
+
+[node name="Upgrade" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer/Upgrades" instance=ExtResource("2_jc35x")]
+layout_mode = 2
+
+[node name="Upgrade2" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer/Upgrades" instance=ExtResource("2_jc35x")]
+layout_mode = 2
+
+[node name="Upgrade3" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer/Upgrades" instance=ExtResource("2_jc35x")]
+layout_mode = 2
+
+[node name="Upgrade4" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer/Upgrades" instance=ExtResource("2_jc35x")]
+layout_mode = 2
+
+[node name="Upgrade5" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer/Upgrades" instance=ExtResource("2_jc35x")]
+layout_mode = 2
+
+[node name="Upgrade6" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer/Upgrades" instance=ExtResource("2_jc35x")]
+layout_mode = 2
+
+[node name="Upgrade7" parent="MarginContainer/MenuBackground/BoxContainer/BoxContainer/Upgrades" instance=ExtResource("2_jc35x")]
+layout_mode = 2

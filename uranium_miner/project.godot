@@ -123,4 +123,4 @@ slot_7={
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
-environment/defaults/default_clear_color=Color(0.101960786, 0.101960786, 0.14117648, 1)
+environment/defaults/default_clear_color=Color(0.06552361, 0.06551948, 0.095735766, 1)
