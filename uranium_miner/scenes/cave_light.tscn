@@ -18,6 +18,7 @@ fill_to = Vector2(0, 0)
 top_level = true
 color = Color(0.8121398, 0.46841812, 0.18327758, 1)
 range_layer_max = 4
+range_item_cull_mask = 31
 texture = SubResource("GradientTexture2D_k0juu")
 texture_scale = 2.5
 script = ExtResource("1_owrc8")

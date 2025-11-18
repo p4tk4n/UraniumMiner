@@ -11,11 +11,11 @@ var player
 var tile_type
 var can_return
 
-var pickaxe_deco_atlas_pos = Vector2i(0,1)
-var lantern_deco_atlas_pos = Vector2i(5,1)
+var pickaxe_deco_atlas_pos = Vector2i(10,0)
+var lantern_deco_atlas_pos = Vector2i(15,1)
 var lantern_deco_world_pos = Vector2(68,-2)
 var pickaxe_deco_world_pos = Vector2(68,-1)
-var barrier_bloc_atlas_pos = Vector2(0,0)
+var barrier_block_atlas_pos = Vector2(1,1)
 
 var entrance_pos = Vector2(pickaxe_deco_world_pos.x - 1, pickaxe_deco_world_pos.y)
 
@@ -66,12 +66,12 @@ func generate_mine_map():
 			
 			if x < 0 or x == global.map_size.x or y > global.map_size.y or (y < 0 and (x < 0 or x == global.map_size.x)):
 				tile_type = null
-				level_tilemap.set_cell(Vector2(x,y),0,barrier_bloc_atlas_pos)
+				level_tilemap.set_cell(Vector2(x,y),1,barrier_block_atlas_pos)
 			
 			if x < 0 and y == 0:
 				for i in range(5):
 					tile_type = null
-					level_tilemap.set_cell(Vector2(x,y-i),0,barrier_bloc_atlas_pos)
+					level_tilemap.set_cell(Vector2(x,y-i),1,barrier_block_atlas_pos)
 			
 			if tile_type:
 				mine_tilemap.set_cell(Vector2i(x,y),0,tile_type)
@@ -80,8 +80,8 @@ func generate_mine_map():
 	
 	cave_light.global_position = mine_tilemap.map_to_local(lantern_deco_world_pos)
 	return_sign.global_position = mine_tilemap.map_to_local(pickaxe_deco_world_pos)
-	level_tilemap.set_cell(Vector2i(68,-2),0,lantern_deco_atlas_pos)
-	level_tilemap.set_cell(Vector2i(68,-1),0,pickaxe_deco_atlas_pos)
+	level_tilemap.set_cell(Vector2i(68,-2),1,lantern_deco_atlas_pos)
+	level_tilemap.set_cell(Vector2i(68,-1),1,pickaxe_deco_atlas_pos)
 	spawn_player(map_start) # spawne hraca ked je na to ready mapa
 
 func _on_return_sign_area_entered(area: Area2D) -> void:
@@ -100,7 +100,6 @@ func _on_resume_button_pressed() -> void:
 	SignalBus.show_cutout.emit()
 	get_tree().paused = false
 	pause_menu.visible = false
-	
 	
 func _on_entrance_button_pressed() -> void:
 	SignalBus.show_cutout.emit()

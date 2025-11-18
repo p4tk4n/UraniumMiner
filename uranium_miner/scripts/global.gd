@@ -16,6 +16,10 @@ var oncoming_scene: NodePath
 
 var ladder_atlas_position = Vector2i(13,1)
 
+var default_cutout_size = 50.0
+var max_cutout_size = 70.0
+var delta_cutout_size = 3.0
+
 var player_stats = {
 	"mining_speed": 2.0, #2.0 def
 	"mining_fortune": 1 #1 def

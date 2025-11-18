@@ -68,10 +68,11 @@ func _ready() -> void:
 	
 	SignalBus.show_interact_bubble.connect(show_interact_bubble)
 	SignalBus.hide_interact_bubble.connect(hide_interact_bubble)
-	
 	SignalBus.show_cutout.connect(show_cutout)
 	SignalBus.hide_cutout.connect(hide_cutout)
-
+	
+	change_cutout_size()
+	
 func show_cutout():
 	tween_cutout(150.0, 0.1)
 func hide_cutout():
@@ -98,7 +99,17 @@ func show_interact_bubble():
 func hide_interact_bubble():
 	can_interact = false
 	interact_bubble.visible = false
-
+func change_cutout_size():
+	
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_method(_set_cutout_size, global.default_cutout_size, global.max_cutout_size, global.delta_cutout_size + randf_range(-1.0,1.5))
+	tween.tween_method(_set_cutout_size, global.max_cutout_size, global.default_cutout_size, global.delta_cutout_size + randf_range(-1.0,1.5))
+	
+func _set_cutout_size(val: float):
+	var cutout_material = vignette_rect.material as ShaderMaterial
+	cutout_material.set_shader_parameter("fade_width", val)
+	
 func _physics_process(delta: float) -> void:
 	if get_tree().paused: return
 	direction = Input.get_axis("player_left","player_right")

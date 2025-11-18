@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bmg8m4gc6adp4"]
+[gd_scene load_steps=32 format=3 uid="uid://bmg8m4gc6adp4"]
 
 [ext_resource type="Script" uid="uid://csgi6voxl3lae" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://clfdu3rtnq0cg" path="res://sprites/player_spritesheet.png" id="2_g2els"]
@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://dlni8n4un5kb2" path="res://sprites/big_fall_effect.png" id="9_y4r1p"]
 [ext_resource type="Shader" uid="uid://cyd3u68e1tr5m" path="res://shaders/vignette.gdshader" id="10_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cug5uo0cvgiyy" path="res://sprites/walk_trail_particle.png" id="11_d2wvv"]
-[ext_resource type="PackedScene" uid="uid://wvlrgn6cmtt6" path="res://scenes/cave_light.tscn" id="14_f1ej7"]
 [ext_resource type="PackedScene" uid="uid://b2htm0dhiijku" path="res://scenes/upgrade_ui.tscn" id="15_oprun"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
@@ -217,6 +216,7 @@ width = 2.0
 [node name="MiningDelayTimer" type="Timer" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_dqkch")]
 anchors_preset = 7
@@ -302,7 +302,5 @@ libraries = {
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_smehm")
 animation = &"big_fall"
-
-[node name="CaveLight" parent="." instance=ExtResource("14_f1ej7")]
 
 [connection signal="timeout" from="MiningDelayTimer" to="." method="_on_mining_delay_timer_timeout"]
