@@ -11,20 +11,24 @@ var player
 var tile_type
 var can_return
 
-var pickaxe_deco_atlas_pos = Vector2i(10,0)
-var lantern_deco_atlas_pos = Vector2i(15,1)
-var lantern_deco_world_pos = Vector2(68,-2)
-var pickaxe_deco_world_pos = Vector2(68,-1)
-var barrier_block_atlas_pos = Vector2(1,1)
+var pickaxe_deco_atlas_pos := Vector2i(10,0)
+var lantern_deco_atlas_pos := Vector2i(15,1)
+var lantern_deco_world_pos := Vector2(68,-2)
+var pickaxe_deco_world_pos := Vector2(68,-1)
+var barrier_block_atlas_pos := Vector2(1,1)
 
-var entrance_pos = Vector2(pickaxe_deco_world_pos.x - 1, pickaxe_deco_world_pos.y)
+var entrance_pos := Vector2(pickaxe_deco_world_pos.x - 1, pickaxe_deco_world_pos.y)
+
+var sorted_tile_weights := []
 
 func _ready() -> void:
 	self.name = "mine"
 	global.current_camera_offset = Vector2.ZERO
+	sort_tile_weights()
 	generate_mine_map()
 	mine_tilemap.name = "cave"
 	return_sign.name = "return_sign"
+	
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -35,7 +39,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if Input.is_action_just_pressed("player_interact") and can_return:
 		SceneChanger.switch_scene(global.scenes["level"])
-		
+
+func sort_tile_weights():
+	for tile_name in global.tile_weights:
+		if tile_name != "rock":
+			sorted_tile_weights.append([tile_name, global.tile_weights[tile_name]])
+	
+	sorted_tile_weights.sort_custom(func(a,b): return a[1] < b[1])
+	
 func spawn_player(spawn_position):
 	player = player_scene.instantiate()
 	player.global_position = spawn_position * 16
@@ -49,20 +60,13 @@ func generate_mine_map():
 			var depth = float(y) / global.map_size.y #percent
 			var depth_increase = pow(depth, 0.5)
 			var chance = randf() * (1.0 - depth_increase * 0.8)
-			if chance < global.tile_weights["uranium"]:
-				tile_type = global.tiles.get("uranium")
-			elif chance < global.tile_weights["diamond"]:
-				tile_type = global.tiles.get("diamond")
-			elif chance < global.tile_weights.get("gold"):
-				tile_type = global.tiles.get("gold")
-			elif chance < global.tile_weights["bomb"]:
-				tile_type = global.tiles.get("bomb")
-			elif chance < global.tile_weights["iron"]:
-				tile_type = global.tiles.get("iron")
-			elif chance < global.tile_weights["coal"]:
-				tile_type = global.tiles.get("coal")
-			elif chance < global.tile_weights["rock"]:
-				tile_type = global.tiles.get("rock")
+			tile_type = global.tiles.get("rock")
+			for line in sorted_tile_weights:
+				var tile_name = line[0]
+				var weight = line[1]
+				if chance < weight:
+					tile_type = global.tiles.get(tile_name)
+					break
 			
 			if x < 0 or x == global.map_size.x or y > global.map_size.y or (y < 0 and (x < 0 or x == global.map_size.x)):
 				tile_type = null

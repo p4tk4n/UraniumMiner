@@ -286,19 +286,26 @@ func break_current_tile():
 	var atlas_coords = tilemap.get_cell_atlas_coords(current_mining_tile)
 	var source_id = tilemap.get_cell_source_id(current_mining_tile)
 	var block_type = atlas_coords.y
-	
 	var tile_name = global.tiles.find_key(Vector2(0,block_type))
+
 	if source_id != -1:
 		tilemap.set_cell(current_mining_tile, -1)
 		spawn_break_effect(current_mining_tile, block_type)
-		var item = global.item_resources[tile_name]
-		item.item_name = tile_name
-		item.quantity = global.drop_amount()
-		item.texture = global.tile_icons[tile_name]
-		if block_type == 7:
-			item.is_usable = true
-		inventory.insert(item,false)
-		
+
+		if block_type == 8:
+			spawn_chest(current_mining_tile)
+		else:
+			var item = global.item_resources[tile_name]
+			item.item_name = tile_name
+			item.quantity = global.drop_amount()
+			item.texture = global.tile_icons[tile_name]
+			if block_type == 7:
+				item.is_usable = true
+			inventory.insert(item,false)
+	
+func spawn_chest(pos):
+	print("Spawned a chest at ", str(pos))
+	
 func spawn_break_effect(tile_pos: Vector2i, block_type: int):
 	var world_pos = tilemap.map_to_local(tile_pos)
 	

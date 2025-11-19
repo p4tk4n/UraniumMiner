@@ -21,7 +21,7 @@ var max_cutout_size = 70.0
 var delta_cutout_size = 3.0
 
 var player_stats = {
-	"mining_speed": 2.0, #2.0 def
+	"mining_speed": 0, #2.0 def
 	"mining_fortune": 1 #1 def
 }
 
@@ -31,11 +31,12 @@ func drop_amount():
 var tile_weights = {
 	"rock": 1.0,
 	"coal": 0.085,
-	"iron": 0.03,
-	"gold": 0.02,
+	"iron": 0.025,
+	"gold": 0.05,
 	"diamond": 0.01,
 	"uranium": 0.0005,
-	"bomb": 0.002
+	"bomb": 0.002,
+	"chest": 0.0031
 }
 
 var scenes = {
@@ -54,7 +55,7 @@ var tiles = {
 	"diamond": Vector2(0,5),
 	"uranium": Vector2(0,6),
 	"bomb": Vector2(0,7),
-	"barrier": Vector2(0,8)
+	"chest": Vector2(0,8)
 }
 
 var tile_icons = {
