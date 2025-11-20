@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://df4wg2ro2efnw"]
+[gd_scene load_steps=20 format=4 uid="uid://df4wg2ro2efnw"]
 
 [ext_resource type="Script" uid="uid://dn2alxqhqsa3o" path="res://scripts/world.gd" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://bmg8m4gc6adp4" path="res://scenes/player.tscn" id="1_nnsk1"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://d24iq6drdtui8" path="res://sprites/resume_button.png" id="9_q5onr"]
 [ext_resource type="Texture2D" uid="uid://cbojuajek6ym" path="res://sprites/back_arrow.png" id="10_jhx03"]
 [ext_resource type="PackedScene" uid="uid://b0gr6v76knw52" path="res://scenes/color_snap_shader.tscn" id="12_jhx03"]
-[ext_resource type="Texture2D" uid="uid://bu7s1pmprmxa1" path="res://sprites/shop_palette.png" id="13_jhx03"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_o8fc1"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 1, 0, 0, 65537, 0, 0, 2, 0, 0, 65538, 0, 0)
@@ -314,6 +313,10 @@ radius = 89.358826
 [node name="World" type="Node2D"]
 script = ExtResource("1_4wyf3")
 
+[node name="GlobalShaders" type="CanvasLayer" parent="."]
+
+[node name="ColorSnapShader" parent="GlobalShaders" instance=ExtResource("12_jhx03")]
+
 [node name="Tutorial" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(313, 443)
@@ -436,11 +439,6 @@ position = Vector2(552, 524)
 
 [node name="CaveLightSign" parent="CaveLights" instance=ExtResource("6_qfnet")]
 position = Vector2(312, 565)
-
-[node name="GlobalShaders" type="CanvasLayer" parent="."]
-
-[node name="ColorSnapShader" parent="GlobalShaders" instance=ExtResource("12_jhx03")]
-palette = ExtResource("13_jhx03")
 
 [connection signal="area_entered" from="CaveEntrance" to="." method="_on_cave_entrance_area_entered"]
 [connection signal="area_exited" from="CaveEntrance" to="." method="_on_cave_entrance_area_exited"]

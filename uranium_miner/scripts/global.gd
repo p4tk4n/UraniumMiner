@@ -21,7 +21,7 @@ var max_cutout_size = 70.0
 var delta_cutout_size = 3.0
 
 var player_stats = {
-	"mining_speed": 0, #2.0 def
+	"mining_speed": 1.5, #2.0 def
 	"mining_fortune": 1 #1 def
 }
 

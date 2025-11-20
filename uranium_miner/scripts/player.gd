@@ -63,8 +63,6 @@ func _ready() -> void:
 	money_label.text = str(global.player_money) + "$"
 	tooltip.visible = false
 	
-	#vignette_rect.visible = false
-	
 	player_sprite.flip_h = true
 	
 	SignalBus.show_interact_bubble.connect(show_interact_bubble)

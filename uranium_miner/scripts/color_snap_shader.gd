@@ -6,3 +6,4 @@ extends Control
 func _ready() -> void:
 	var material = color_rect.material as ShaderMaterial
 	material.set_shader_parameter("palette", palette)
+	color_rect.visible = true
