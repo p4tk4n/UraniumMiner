@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var mining_delay_timer: Timer = $MiningDelayTimer
 @onready var particle_scene = preload("res://scenes/block_breaking_particles.tscn")
 @onready var bomb_scene = preload("res://scenes/bomb.tscn")
+@onready var chest_scene = preload("res://scenes/chest.tscn")
 @onready var interact_bubble: Sprite2D = $InteractBubble
 @onready var inventory_ui: Control = $CanvasLayer/InventoryUI
 @onready var money_label: Label = $CanvasLayer/PlayerHUD/NinePatchRect/MoneyLabel
@@ -304,7 +305,11 @@ func break_current_tile():
 			inventory.insert(item,false)
 	
 func spawn_chest(pos):
-	print("Spawned a chest at ", str(pos))
+	var chest_instance = chest_scene.instantiate()
+	chest_instance.global_position = tilemap.map_to_local(pos)
+	print(chest_instance.global_position)
+	print(self.global_position)
+	get_parent().add_child(chest_instance)
 	
 func spawn_break_effect(tile_pos: Vector2i, block_type: int):
 	var world_pos = tilemap.map_to_local(tile_pos)

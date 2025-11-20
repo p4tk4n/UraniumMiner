@@ -2,6 +2,7 @@ class_name Inventory
 extends Resource
 
 signal update
+signal slot_updated(slot_index: int)
 
 @export var slots: Array[InventorySlot]
 
@@ -19,6 +20,8 @@ func clear_slot():
 	update.emit()
 
 func insert(item: InventoryItem,is_from_shop=false):
+	var updated_slot_index = -1
+	
 	# First, try to find existing slots with the same item
 	var existing_slots = slots.filter(func(slot): 
 		return slot.item == item
@@ -26,10 +29,12 @@ func insert(item: InventoryItem,is_from_shop=false):
 	
 	if not existing_slots.is_empty():
 		if not is_from_shop:
-			existing_slots[0].quantity += global.drop_amount()
+			existing_slots[0].quantity += item.quantity
 		else:
 			existing_slots[0].quantity += global.shop_item_amount
+		updated_slot_index = slots.find(existing_slots[0])
 		update.emit()
+		SignalBus.squish_slot.emit(updated_slot_index)
 		return
 	
 	# If no existing slots, find completely empty slots
@@ -40,8 +45,10 @@ func insert(item: InventoryItem,is_from_shop=false):
 	if not empty_slots.is_empty():
 		empty_slots[0].item = item
 		if not is_from_shop:
-			empty_slots[0].quantity += global.drop_amount()
+			empty_slots[0].quantity += item.quantity
 		else:
 			empty_slots[0].quantity += global.shop_item_amount
+		updated_slot_index = slots.find(empty_slots[0])
 		update.emit()
+		SignalBus.squish_slot.emit(updated_slot_index)
 		return

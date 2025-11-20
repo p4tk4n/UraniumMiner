@@ -27,7 +27,7 @@ size = Vector2(10, 15)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f1ej7"]
 shader = ExtResource("10_jej6c")
-shader_parameter/cutout_size = 150.0
+shader_parameter/cutout_size = 180.0
 shader_parameter/fade_width = 50.0
 
 [sub_resource type="Animation" id="Animation_tuyoq"]
@@ -216,7 +216,6 @@ width = 2.0
 [node name="MiningDelayTimer" type="Timer" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_dqkch")]
 anchors_preset = 7

@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var player_scene = preload("res://scenes/player.tscn")
+@onready var player_scene = load("res://scenes/player.tscn")
 @onready var mine_tilemap: TileMapLayer = $MineTilemap
 @onready var level_tilemap: TileMapLayer = $Level
 @onready var cave_light: PointLight2D = $CaveLight
