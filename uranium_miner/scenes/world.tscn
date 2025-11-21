@@ -314,7 +314,6 @@ radius = 89.358826
 script = ExtResource("1_4wyf3")
 
 [node name="GlobalShaders" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorSnapShader" parent="GlobalShaders" instance=ExtResource("12_jhx03")]
 

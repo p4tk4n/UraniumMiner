@@ -58,7 +58,7 @@ func _ready() -> void:
 	else:
 		vignette_rect.visible = false
 		
-	inventory.update.connect(inventory_ui.update_slots)
+	#inventory.update.connect(inventory_ui.update_slots)
 	money_label.text = str(global.player_money) + "$"
 	tooltip.visible = false
 	

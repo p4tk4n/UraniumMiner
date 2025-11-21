@@ -18,7 +18,6 @@ var pickaxe_deco_world_pos := Vector2(68,-1)
 var barrier_block_atlas_pos := Vector2(1,1)
 
 var entrance_pos := Vector2(pickaxe_deco_world_pos.x - 1, pickaxe_deco_world_pos.y)
-
 var sorted_tile_weights := []
 
 func _ready() -> void:
@@ -30,7 +29,7 @@ func _ready() -> void:
 	return_sign.name = "return_sign"
 	
 	
-func _unhandled_input(event: InputEvent) -> void:
+func input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		pause_menu.visible = not pause_menu.visible
 		get_tree().paused = pause_menu.visible
