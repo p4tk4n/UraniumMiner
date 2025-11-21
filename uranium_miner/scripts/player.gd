@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 @onready var camera: Camera2D = $Camera2D
 @onready var mining_raycast: RayCast2D = $MiningRaycast
-@onready var line_2d: Line2D = $Line2D
 @onready var mining_delay_timer: Timer = $MiningDelayTimer
 @onready var particle_scene = preload("res://scenes/block_breaking_particles.tscn")
 @onready var bomb_scene = preload("res://scenes/bomb.tscn")
@@ -104,7 +103,6 @@ func change_cutout_size():
 	tween.set_loops()
 	tween.tween_method(_set_cutout_size, global.default_cutout_size, global.max_cutout_size, global.delta_cutout_size + randf_range(-1.0,1.5))
 	tween.tween_method(_set_cutout_size, global.max_cutout_size, global.default_cutout_size, global.delta_cutout_size + randf_range(-1.0,1.5))
-	
 func _set_cutout_size(val: float):
 	var cutout_material = vignette_rect.material as ShaderMaterial
 	cutout_material.set_shader_parameter("fade_width", val)
@@ -125,12 +123,14 @@ func _physics_process(delta: float) -> void:
 	if velocity.y > 0:
 		anim_effects.visible = true
 		anim_effects.play("big_fall")
-	
+		velocity.y *= 1.1
+		
 	if is_on_floor():
 		velocity.x = direction * normal_speed
 		if was_airborne:
 			show_fall_effect()
 			was_airborne = false
+			
 	elif can_climb:
 		velocity.x = direction * normal_speed
 	else:
@@ -275,10 +275,6 @@ func update_tile_cracking():
 
 func update_mining_visuals():
 	var progress_ratio = mining_progress / mining_time_req
-	
-	# Visual feedback - change line color based on progress
-	line_2d.default_color = Color(1.0, 1.0 - progress_ratio, 0.0)  # Yellow to Red
-	
 	var crack_stage = int(progress_ratio * CRACK_STAGES) + 1
 
 func break_current_tile():
@@ -316,16 +312,6 @@ func spawn_break_effect(tile_pos: Vector2i, block_type: int):
 	get_parent().add_child(particles)
 	particles.position = tilemap.map_to_local(tile_pos)
 	particles.emitting = true
-	
-func show_mining_effect(tile_pos: Vector2i, show: bool):
-	if show:
-		# Make the mining line visible
-		line_2d.visible = true
-		line_2d.default_color = Color.YELLOW
-	else:
-		# Hide or reset the mining line
-		line_2d.visible = false
-		line_2d.default_color = Color.WHITE	
 
 func handle_mining_input():
 	var new_mining_direction = Vector2.ZERO

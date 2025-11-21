@@ -25,6 +25,8 @@ func squish(obj):
 	tween.tween_property(obj.item_display, "scale", Vector2(2.5,1.5),0.1)
 	tween.tween_property(obj.item_display, "scale", Vector2(1.8,2.2),0.1).set_delay(0.1)
 	tween.tween_property(obj.item_display, "scale", Vector2(2.0,2.0),0.1).set_delay(0.2)
+	await tween.finished
+	SignalBus.slot_squished.emit()
 	
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("player_inventory"):

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6umi77lch58o"]
+[gd_scene load_steps=15 format=3 uid="uid://c6umi77lch58o"]
 
 [ext_resource type="Script" uid="uid://57e2qg740qfs" path="res://scripts/chest.gd" id="1_oii8l"]
 [ext_resource type="Shader" uid="uid://cf1omsptua7n7" path="res://shaders/bloom.gdshader" id="2_gqd3d"]
+[ext_resource type="Texture2D" uid="uid://dfaua3dbv827y" path="res://sprites/chest_opened_large.png" id="2_yhylo"]
 [ext_resource type="Texture2D" uid="uid://cmn2q84ravkmr" path="res://sprites/chest_bigger_sprite.png" id="3_gqd3d"]
 [ext_resource type="Texture2D" uid="uid://dupypjxnmi34o" path="res://sprites/confetti.png" id="4_yue2o"]
 
@@ -15,6 +16,7 @@ shader_parameter/glow_intensity = 5.0
 shader_parameter/glow_radius = 0.050000002375
 shader_parameter/pulse_speed = 2.50000011875
 shader_parameter/pulse_strength = 1.0
+shader_parameter/sprite_modulate = Color(1, 1, 1, 1)
 
 [sub_resource type="Curve" id="Curve_yhylo"]
 _limits = [0.0, 100.0, 0.0, 1.0]
@@ -29,8 +31,47 @@ point_count = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yhylo"]
 
+[sub_resource type="Animation" id="Animation_yhylo"]
+resource_name = "fade_sprite"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChestSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.044158664),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.5137255)]
+}
+
+[sub_resource type="Animation" id="Animation_w02o5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChestSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ilhio"]
+_data = {
+&"RESET": SubResource("Animation_w02o5"),
+&"fade_sprite": SubResource("Animation_yhylo")
+}
+
 [node name="Chest" type="Node2D"]
 script = ExtResource("1_oii8l")
+chest_opened_sprite = ExtResource("2_yhylo")
 
 [node name="InteractArea" type="Area2D" parent="."]
 visible = false
@@ -83,6 +124,11 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_sj8sc")
 [node name="DisplaySpot" type="Sprite2D" parent="Background"]
 material = SubResource("ShaderMaterial_yhylo")
 position = Vector2(16, 16)
+
+[node name="Animations" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ilhio")
+}
 
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interact_area_area_entered"]
 [connection signal="area_exited" from="InteractArea" to="." method="_on_interact_area_area_exited"]

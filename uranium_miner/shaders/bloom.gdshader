@@ -5,6 +5,7 @@ uniform float glow_intensity : hint_range(0.0, 5.0) = 1.0;
 uniform float glow_radius : hint_range(0.0, 1.0) = 0.05; // Controls bloom size
 uniform float pulse_speed : hint_range(0.0, 5.0) = 2.0;
 uniform float pulse_strength : hint_range(0.0, 1.0) = 0.3;
+uniform vec4 sprite_modulate : source_color = vec4(1.0);
 
 void fragment() {
     vec4 original = texture(TEXTURE, UV);
@@ -38,4 +39,5 @@ void fragment() {
     
     COLOR.rgb = original.rgb + glow;
     COLOR.a = max(original.a, length(glow));
+	COLOR *= sprite_modulate;
 }

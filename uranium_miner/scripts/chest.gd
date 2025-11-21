@@ -6,6 +6,8 @@ extends Node2D
 @onready var display_spot: Sprite2D = $Background/DisplaySpot
 @onready var background: Panel = $Background
 @onready var confetti_particle: CPUParticles2D = $ConfettiParticle
+@onready var chest_sprite: Sprite2D = $ChestSprite
+@export var chest_opened_sprite: Texture2D 
 
 var can_open = false
 var is_spinning: bool = false
@@ -23,24 +25,6 @@ func _ready() -> void:
 	
 	if global.tile_icons.size() > 0:
 		display_spot.texture = global.tile_icons[global.tile_icons.keys()[0]]
-	
-func open_chest():
-	background.show()
-	start_lottery()  # Start the lottery when chest opens
-
-func start_lottery():
-	if is_spinning:
-		return
-	
-	is_spinning = true
-	spin_timer = 0.0
-	current_item_index = 0
-	target_item_index = randi() % global.tile_icons.size()
-	print("TARGET REWARD INDEX IS ", target_item_index)
-	item_change_speed = 0.0  # Reset timer
-	
-	display_spot.scale = Vector2.ONE
-	display_spot.modulate = Color.WHITE
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("player_interact"):
@@ -60,6 +44,25 @@ func _process(delta: float) -> void:
 		else:
 			# Finished - land on target
 			land_on_target()
+
+func open_chest():
+	chest_sprite.texture = chest_opened_sprite
+	background.show()
+	start_lottery()  # Start the lottery when chest opens
+
+func start_lottery():
+	if is_spinning:
+		return
+	
+	is_spinning = true
+	spin_timer = 0.0
+	current_item_index = 0
+	target_item_index = randi() % global.tile_icons.size()
+	print("TARGET REWARD INDEX IS ", target_item_index)
+	item_change_speed = 0.0  # Reset timer
+	
+	display_spot.scale = Vector2.ONE
+	display_spot.modulate = Color.WHITE
 
 func change_item_fast(delta):
 	var speed = lerp(0.05, 0.3, 0.1) 
@@ -96,22 +99,29 @@ func celebrate_win():
 	# Change color to gold
 	tween.tween_property(display_spot, "modulate", Color.GOLD, 0.3)
 	
+	emit_confetti()
 	# Bounce effect
 	var original_y = display_spot.position.y
 	tween.tween_property(display_spot, "position:y", original_y - 15, 0.15)
 	tween.tween_property(display_spot, "position:y", original_y, 0.15).set_delay(0.15)
 	
-	#emit_confetti()
-	
 	display_spot.queue_redraw()
-	
+	fade_chest_sprite()
+	await confetti_particle.finished
+	confetti_particle.queue_free()
 	move_item_to_player()
+
+func fade_chest_sprite():
+	var tween = create_tween()
+	var material = chest_sprite.material as ShaderMaterial
+	tween.tween_method(_set_shader_modulate, Color.WHITE, Color.TRANSPARENT, 2.0)
+	await tween.finished
+	
+func _set_shader_modulate(color: Color):
+	chest_sprite.material.set_shader_parameter("sprite_modulate", color)
 
 func emit_confetti():
 	confetti_particle.emitting = true
-	await confetti_particle.finished
-	await get_tree().create_timer(0.1).timeout
-	confetti_particle.queue_free()
 
 func move_item_to_player():
 	var tween = create_tween()

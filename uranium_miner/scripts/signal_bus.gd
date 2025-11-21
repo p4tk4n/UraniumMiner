@@ -6,3 +6,4 @@ signal screen_shake
 signal hide_cutout
 signal show_cutout
 signal squish_slot(index: int)
+signal slot_squished

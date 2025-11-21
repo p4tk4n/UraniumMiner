@@ -6,14 +6,17 @@ signal slot_updated(slot_index: int)
 
 @export var slots: Array[InventorySlot]
 
-func sell_slot():
+func sell_slot() -> int:
+	SignalBus.squish_slot.emit(global.current_hand_slot-1)
 	var sold_items = slots[global.current_hand_slot-1]
 	if sold_items and sold_items.item:
 		var sold_for = sold_items.quantity * global.item_value[sold_items.item.item_name]
 		global.player_money += sold_for
 		clear_slot()
 		return sold_for
-		
+	
+	return 0
+	
 func clear_slot():
 	slots[global.current_hand_slot-1].quantity = 0
 	slots[global.current_hand_slot-1].item = null
