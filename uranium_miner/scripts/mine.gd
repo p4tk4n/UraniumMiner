@@ -28,14 +28,13 @@ func _ready() -> void:
 	mine_tilemap.name = "cave"
 	return_sign.name = "return_sign"
 	
-	
-func input(_event: InputEvent) -> void:
+func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		pause_menu.visible = not pause_menu.visible
 		get_tree().paused = pause_menu.visible
 		if pause_menu.visible: SignalBus.hide_cutout.emit() 
 		else: SignalBus.show_cutout.emit()
-		
+		print("shown pause menu")
 	if Input.is_action_just_pressed("player_interact") and can_return:
 		SceneChanger.switch_scene(global.scenes["level"])
 

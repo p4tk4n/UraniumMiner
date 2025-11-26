@@ -66,7 +66,8 @@ func destroy_tile(tile_pos: Vector2i):
 			if atlas_coords.y == 7:
 				item.is_usable = true
 			player_inventory.insert(item,false)	
-					
+			SignalBus.item_picked_up.emit()
+			
 func update_whitening_effect():
 	var time_remaining = boom_timer.time_left
 	var total_time = boom_timer.wait_time

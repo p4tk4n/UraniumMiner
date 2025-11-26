@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bmg8m4gc6adp4"]
+[gd_scene load_steps=38 format=3 uid="uid://bmg8m4gc6adp4"]
 
 [ext_resource type="Script" uid="uid://csgi6voxl3lae" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://clfdu3rtnq0cg" path="res://sprites/player_spritesheet.png" id="2_g2els"]
@@ -13,7 +13,13 @@
 [ext_resource type="Texture2D" uid="uid://dlni8n4un5kb2" path="res://sprites/big_fall_effect.png" id="9_y4r1p"]
 [ext_resource type="Shader" uid="uid://cyd3u68e1tr5m" path="res://shaders/vignette.gdshader" id="10_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cug5uo0cvgiyy" path="res://sprites/walk_trail_particle.png" id="11_d2wvv"]
+[ext_resource type="AudioStream" uid="uid://cnbh87imgxc7v" path="res://sfx/mining_0.mp3" id="15_a8ls1"]
 [ext_resource type="PackedScene" uid="uid://b2htm0dhiijku" path="res://scenes/upgrade_ui.tscn" id="15_oprun"]
+[ext_resource type="AudioStream" uid="uid://ccjf77yvnc0cc" path="res://sfx/block_broken.mp3" id="16_a8ls1"]
+[ext_resource type="AudioStream" uid="uid://fbaoy77kb4yb" path="res://sfx/item_pickup.mp3" id="17_qfm1y"]
+[ext_resource type="AudioStream" uid="uid://c5pe82ugprbn3" path="res://sfx/walking.mp3" id="18_fulsm"]
+[ext_resource type="AudioStream" uid="uid://bbf3di6ns5sn1" path="res://sfx/open_ui.mp3" id="19_60mlk"]
+[ext_resource type="AudioStream" uid="uid://xbvbp2viunro" path="res://sfx/close_ui.mp3" id="20_i4ail"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 12.0
@@ -44,6 +50,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [20]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MineSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "idle"
@@ -65,7 +83,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_smehm"]
 resource_name = "mining"
-length = 0.4
+length = 0.6
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -74,10 +92,22 @@ tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3),
+"times": PackedFloat32Array(0, 0.3, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [10, 11, 12]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MineSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smehm"]
@@ -301,4 +331,39 @@ position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_smehm")
 animation = &"big_fall"
 
+[node name="MineSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_a8ls1")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="BlockBroken" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_a8ls1")
+volume_db = -6.0
+pitch_scale = 0.8
+
+[node name="ItemPickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_qfm1y")
+volume_db = -5.0
+max_polyphony = 100
+
+[node name="Walking" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_fulsm")
+volume_db = -5.0
+pitch_scale = 0.7
+max_polyphony = 2
+
+[node name="open_ui" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_60mlk")
+volume_db = -10.0
+pitch_scale = 0.8
+
+[node name="close_ui" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_i4ail")
+volume_db = -10.0
+pitch_scale = 0.8
+
 [connection signal="timeout" from="MiningDelayTimer" to="." method="_on_mining_delay_timer_timeout"]
+[connection signal="finished" from="MineSound" to="." method="_on_mine_sound_finished"]
+[connection signal="finished" from="BlockBroken" to="." method="_on_block_broken_finished"]
+[connection signal="finished" from="ItemPickup" to="." method="_on_item_pickup_finished"]
+[connection signal="finished" from="Walking" to="." method="_on_walking_finished"]

@@ -7,3 +7,6 @@ signal hide_cutout
 signal show_cutout
 signal squish_slot(index: int)
 signal slot_squished
+signal item_picked_up
+signal open_ui_sfx
+signal close_ui_sfx

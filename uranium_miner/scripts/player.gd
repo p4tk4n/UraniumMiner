@@ -17,6 +17,15 @@ extends CharacterBody2D
 @onready var walk_trail: CPUParticles2D = $PlayerSprite/WalkTrail
 @onready var vignette_rect: ColorRect = $CanvasLayer/VignetteRect
 
+
+#sfx
+@onready var mine_sound: AudioStreamPlayer2D = $MineSound
+@onready var block_broken: AudioStreamPlayer2D = $BlockBroken
+@onready var item_pickup: AudioStreamPlayer2D = $ItemPickup
+@onready var walking: AudioStreamPlayer2D = $Walking
+@onready var open_ui: AudioStreamPlayer2D = $open_ui
+@onready var close_ui: AudioStreamPlayer2D = $close_ui
+
 @export var tilemap: TileMapLayer
 @export var mining_direction := Vector2.ZERO
 @export var inventory: Inventory
@@ -68,6 +77,9 @@ func _ready() -> void:
 	SignalBus.hide_interact_bubble.connect(hide_interact_bubble)
 	SignalBus.show_cutout.connect(show_cutout)
 	SignalBus.hide_cutout.connect(hide_cutout)
+	SignalBus.item_picked_up.connect(item_picked_up)
+	SignalBus.open_ui_sfx.connect(func(): open_ui.play())
+	SignalBus.close_ui_sfx.connect(func(): close_ui.play())
 	
 	change_cutout_size()
 	
@@ -142,18 +154,19 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("player_jump") and can_climb:
 		velocity.y = -climb_velocity
 	
-	if direction < 0:
-		player_sprite.flip_h = true
-	elif direction > 0:
-		player_sprite.flip_h = false
+	if direction and is_on_floor():
+		if not walking.playing:
+			walking.play()
 	
 	if direction > 0:
+		player_sprite.flip_h = false
 		if is_mining:
 			player_animations.play("mining")
 		else:
 			player_animations.play("idle")
 		
 	elif direction < 0:
+		player_sprite.flip_h = true
 		if is_mining:
 			player_animations.play("mining")
 		else:
@@ -169,7 +182,8 @@ func _process(delta: float) -> void:
 	mining_raycast.target_position = mining_direction * 20.0
 	if is_mining:
 		update_mining(delta)
-	
+		
+		
 	interact_bubble.visible = can_interact
 	
 	if bubble_sin_value > PI:
@@ -286,7 +300,9 @@ func break_current_tile():
 	if source_id != -1:
 		tilemap.set_cell(current_mining_tile, -1)
 		spawn_break_effect(current_mining_tile, block_type)
-
+		if not block_broken.playing:
+			block_broken.play()
+		
 		if block_type == 8:
 			spawn_chest(current_mining_tile)
 		else:
@@ -297,7 +313,13 @@ func break_current_tile():
 			if block_type == 7:
 				item.is_usable = true
 			inventory.insert(item,false)
-	
+			
+			item_picked_up()
+			
+func item_picked_up():
+	await get_tree().create_timer(0.15).timeout
+	item_pickup.play()			
+			
 func spawn_chest(pos):
 	var chest_instance = chest_scene.instantiate()
 	chest_instance.global_position = tilemap.map_to_local(pos)
@@ -340,6 +362,14 @@ func handle_mining_input():
 		mining_direction = new_mining_direction
 		start_mining(mining_direction)
 
-func _on_mining_delay_timer_timeout() -> void:
-	#can_mine = true
-	pass
+func _on_mine_sound_finished() -> void:
+	mine_sound.pitch_scale = .75 + randf_range(-0.1,0.1)
+
+func _on_block_broken_finished() -> void:
+	block_broken.pitch_scale = .8 + randf_range(-0.1,0.1)
+	
+func _on_item_pickup_finished() -> void:
+	item_pickup.pitch_scale = 1.0 + randf_range(-0.1,0.1)
+
+func _on_walking_finished() -> void:
+	walking.pitch_scale = .8 + randf_range(-0.1,0.1)
